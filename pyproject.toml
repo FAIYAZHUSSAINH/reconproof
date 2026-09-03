@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "reconproof"
+version = "1.0.0"
+description = "A settlement-reconciliation agent that proves every match, quantifies confidence, and abstains when it cannot prove the answer."
+requires-python = ">=3.10"
+dependencies = ["pydantic>=2.7", "rich>=13.0"]
+
+[project.optional-dependencies]
+serve = ["fastapi>=0.110", "uvicorn>=0.29"]
+llm = ["groq>=0.11"]
+dev = ["pytest>=8.0"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+# So `pytest` works straight from a clone without an editable install.
+pythonpath = ["src"]
+testpaths = ["tests"]
