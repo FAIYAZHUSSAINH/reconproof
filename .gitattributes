@@ -1,0 +1,5 @@
+# The generator writes CSVs with an explicit "\n" line terminator so that a
+# seeded run is byte-identical on any machine. If git rewrote them to CRLF on
+# a Windows checkout, `--seed 42` would come out "modified" the moment anyone
+# re-ran it, and the reproducibility claim in README.md would be false.
+* text=auto eol=lf
