@@ -3,7 +3,8 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .env
-report.json
+report.tampered.json
+RESULTS.tampered.md
 .llm_cache.json
 *.egg-info/
 build/
