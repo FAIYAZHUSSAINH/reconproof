@@ -14,8 +14,18 @@ Committed scorecard for `--seed 42 --difficulty standard --no-llm`. Reproduce it
 | Exception coverage | 100.0% of unmatched credits carry a typed reason |
 | Diagnosis accuracy | 100.0% (12/12 unmatched units given the right reason code) |
 | Handled correctly | 100.0% (30/30 labelled units either proved or correctly flagged) |
-| Throughput | 366 records in 0.009s (40621.5 records/sec) |
+| Throughput | 366 records in 0.011s (31930.5 records/sec) |
 | LLM adjudication | disabled (`--no-llm`) |
+
+## Across difficulty
+
+One number on one batch proves nothing. These rows are the same pipeline re-run on `--difficulty easy|standard|hard`, measured during this run rather than typed in. The match rate falls as the hard cases multiply; the false-match rate does not move. (The seed varies amounts, dates and narrations but not the mix of case types, so varying it gives identical rates - which confirms determinism and says nothing about robustness.)
+
+| Difficulty | Records | Match rate | Value coverage | Exceptions | False matches |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| easy | 474 | 72.7% (24/33) | 78.8% | 12 | **0** |
+| standard *(this run)* | 366 | 66.7% (18/27) | 69.8% | 12 | **0** |
+| hard | 465 | 54.5% (18/33) | 64.9% | 18 | **0** |
 
 ## Per case type
 

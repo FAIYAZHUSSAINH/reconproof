@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import json
 import platform
+import tempfile
 import sys
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -470,8 +471,61 @@ def _pct(value: float) -> str:
     return f"{value * 100:.1f}%"
 
 
+def sweep_difficulties(seed: int, levels=("easy", "standard", "hard")) -> list[dict]:
+    """Re-run the whole pipeline at each difficulty, into a temporary batch.
+
+    Measured rather than asserted: a table of numbers typed into a document is
+    a claim, and this one is cheap enough to just recompute. Nothing here
+    touches `data/generated`, so the committed batch is never disturbed.
+    """
+    # Imported here, not at module scope: `report` is imported by `serve`, and
+    # a scorecard writer should not drag the generator in with it.
+    from .generate import generate
+    from .ingest import load
+    from .pipeline import run_pipeline
+
+    rows: list[dict] = []
+    with tempfile.TemporaryDirectory(prefix="reconproof-sweep-") as tmp:
+        for level in levels:
+            root = Path(tmp) / level
+            generate(
+                seed=seed,
+                difficulty=level,
+                data_dir=root / "generated",
+                truth_path=root / "ground_truth.json",
+            )
+            result = run_pipeline(load(root / "generated"))
+            card = build_scorecard(
+                result,
+                load_ground_truth(root / "ground_truth.json"),
+                seed=seed,
+                difficulty=level,
+            )
+            rows.append(
+                {
+                    "difficulty": level,
+                    "records": card.totals["records"],
+                    **{
+                        key: card.metrics[key]
+                        for key in (
+                            "auto_match_rate_records",
+                            "matched_credits",
+                            "live_credits",
+                            "value_coverage",
+                            "exceptions",
+                            "false_matches",
+                        )
+                    },
+                }
+            )
+    return rows
+
+
 def write_results_md(
-    result: PipelineResult, scorecard: Scorecard, path: Path | str
+    result: PipelineResult,
+    scorecard: Scorecard,
+    path: Path | str,
+    sweep: list[dict] | None = None,
 ) -> Path:
     metrics = scorecard.metrics
     run = scorecard.run
@@ -540,6 +594,34 @@ def write_results_md(
     else:
         lines.append("| LLM adjudication | disabled (`--no-llm`) |")
     lines.append("")
+
+    if sweep:
+        lines.append("## Across difficulty")
+        lines.append("")
+        lines.append(
+            "One number on one batch proves nothing. These rows are the same "
+            "pipeline re-run on `--difficulty easy|standard|hard`, measured "
+            "during this run rather than typed in. The match rate falls as the "
+            "hard cases multiply; the false-match rate does not move. (The "
+            "seed varies amounts, dates and narrations but not the mix of case "
+            "types, so varying it gives identical rates - which confirms "
+            "determinism and says nothing about robustness.)"
+        )
+        lines.append("")
+        lines.append(
+            "| Difficulty | Records | Match rate | Value coverage | Exceptions | False matches |"
+        )
+        lines.append("| --- | ---: | ---: | ---: | ---: | ---: |")
+        for row in sweep:
+            marker = " *(this run)*" if row["difficulty"] == run["difficulty"] else ""
+            lines.append(
+                f"| {row['difficulty']}{marker} | {row['records']} | "
+                f"{_pct(row['auto_match_rate_records'])} "
+                f"({row['matched_credits']}/{row['live_credits']}) | "
+                f"{_pct(row['value_coverage'])} | {row['exceptions']} | "
+                f"**{row['false_matches']}** |"
+            )
+        lines.append("")
 
     lines.append("## Per case type")
     lines.append("")

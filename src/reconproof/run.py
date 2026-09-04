@@ -27,6 +27,7 @@ from .report import (
     load_ground_truth,
     print_derivation,
     print_scorecard,
+    sweep_difficulties,
     write_report_json,
     write_results_md,
 )
@@ -113,6 +114,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="reconcile the committed CSVs instead of regenerating them",
     )
+    parser.add_argument(
+        "--no-sweep",
+        action="store_true",
+        help="skip the easy/standard/hard comparison table in RESULTS.md",
+    )
     parser.add_argument("--quiet", action="store_true", help="write files, print nothing")
     return parser
 
@@ -169,8 +175,15 @@ def main(argv: list[str] | None = None) -> int:
         # artefacts, never over them, unless a path was asked for explicitly.
         out_path, results_path = "report.tampered.json", "RESULTS.tampered.md"
 
+    # The difficulty sweep is measured, not typed in, so the table in
+    # RESULTS.md cannot go stale behind a change to the generator. Skipped on
+    # a tampered run, where the numbers would be meaningless anyway.
+    sweep = None
+    if not args.tamper and not args.no_sweep:
+        sweep = sweep_difficulties(args.seed)
+
     write_report_json(result, scorecard, out_path)
-    write_results_md(result, scorecard, results_path)
+    write_results_md(result, scorecard, results_path, sweep=sweep)
 
     if not args.quiet:
         print_scorecard(result, scorecard)

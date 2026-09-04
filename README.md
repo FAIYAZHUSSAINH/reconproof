@@ -61,6 +61,28 @@ With `--llm` the match rate rises, because the model resolves three residuals
 the deterministic rules abstain on. It rises *through* the verifier, not around
 it: see "The trust boundary" below.
 
+### It falls where it should
+
+One number on one batch proves nothing, so here it is across all three
+difficulty settings. This table is *measured on every run* and written into
+[RESULTS.md](RESULTS.md) rather than typed in, so it cannot go stale behind a
+change to the generator (`--no-sweep` skips it).
+
+| Difficulty | Records | Match rate | Value coverage | Exceptions | False matches |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| easy | 474 | 72.7% (24/33) | 78.8% | 12 | **0** |
+| standard | 366 | 66.7% (18/27) | 69.8% | 12 | **0** |
+| hard | 465 | 54.5% (18/33) | 64.9% | 18 | **0** |
+
+The match rate falls as the hard cases multiply. The false-match rate does not
+move, which is the property worth having.
+
+A note on what the seed does *not* do: it varies amounts, dates and narrations
+but not the mix of case types, so ten different seeds give ten identical match
+rates. That confirms determinism and says nothing about robustness, which is
+why the table above varies difficulty instead. `tests/test_pipeline.py::TestTheMatchRateFallsWhereItShould`
+asserts both halves of it.
+
 ## The problem
 
 A payment gateway does not forward each sale. It batches them and sends one

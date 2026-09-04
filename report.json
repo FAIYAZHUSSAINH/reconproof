@@ -2,7 +2,7 @@
   "run": {
     "seed": 42,
     "difficulty": "standard",
-    "generated_at": "2026-09-04T13:00:52+00:00",
+    "generated_at": "2026-09-04T13:26:27+00:00",
     "python": "3.12.10",
     "platform": "Windows",
     "flags": "--no-llm --seed 42 --quiet",
@@ -19,8 +19,8 @@
     "settlements": 27,
     "bank_txns": 31,
     "records": 366,
-    "wall_clock_seconds": 0.009,
-    "records_per_second": 40621.5
+    "wall_clock_seconds": 0.011,
+    "records_per_second": 31930.5
   },
   "metrics": {
     "auto_match_rate_records": 0.6667,

@@ -274,3 +274,47 @@ class TestIntegrityFailuresAreTypedHonestly:
         # through to the money-shaped taxonomy.
         assert integrity_code("SUSPECT_UNAPPLIED_REFUND") is None
         assert integrity_code(None) is None
+
+
+class TestTheMatchRateFallsWhereItShould:
+    """The bar says one cherry-picked match proves nothing.
+
+    The seed is the wrong axis to prove that on: it varies amounts, dates and
+    narrations but not the *shape* of the batch, so ten seeds give ten
+    identical match rates. `--difficulty` is the axis that changes how many
+    hard cases there are, and it is the one worth reporting - the rate has to
+    fall as the data gets harder, and the false-match rate has to stay at zero
+    while it does.
+    """
+
+    def _score(self, tmp_path, difficulty):
+        from reconproof.generate import generate
+        from reconproof.ingest import load
+        from reconproof.report import load_ground_truth
+
+        root = tmp_path / difficulty
+        generate(
+            seed=42,
+            difficulty=difficulty,
+            data_dir=root / "generated",
+            truth_path=root / "ground_truth.json",
+        )
+        result = run_pipeline(load(root / "generated"))
+        return build_scorecard(
+            result,
+            load_ground_truth(root / "ground_truth.json"),
+            seed=42,
+            difficulty=difficulty,
+        ).metrics
+
+    def test_harder_data_matches_less(self, tmp_path):
+        rates = {
+            level: self._score(tmp_path, level)["auto_match_rate_records"]
+            for level in ("easy", "standard", "hard")
+        }
+        assert rates["easy"] > rates["standard"] > rates["hard"], rates
+
+    def test_no_difficulty_produces_a_false_match(self, tmp_path):
+        """The one number that is not allowed to move."""
+        for level in ("easy", "standard", "hard"):
+            assert self._score(tmp_path, level)["false_matches"] == 0, level
