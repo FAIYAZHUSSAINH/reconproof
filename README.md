@@ -13,7 +13,7 @@ python -m venv .venv
 .venv\Scripts\activate            # Windows;  source .venv/bin/activate elsewhere
 pip install -r requirements.txt
 
-python -m pytest -q               # 126 tests, including the ones that attack the verifier
+python -m pytest -q               # 133 tests, including the ones that attack the verifier
 .\run.ps1                         # or:  PYTHONPATH=src python -m reconproof.run --no-llm --seed 42
 ```
 
@@ -23,7 +23,12 @@ That writes `report.json` and `RESULTS.md` and prints the scorecard below. Then:
 .\run.ps1 --tamper pay_0031 --tamper-delta 5000   # corrupt a record; watch a proof flip to FAIL
 .\run.ps1 --show bnk_0007                         # print one proof's full derivation
 .\run.ps1 --difficulty hard                       # more hard cases, and a lower match rate
+
+python -m reconproof.serve                        # the dashboard on http://127.0.0.1:8000
 ```
+
+The dashboard needs no Node and has no build step: FastAPI serves plain HTML,
+CSS and ES modules out of [`web/`](web/).
 
 ## The scorecard
 
@@ -219,9 +224,46 @@ src/reconproof/
   report.py        scorecard, RESULTS.md, report.json
   run.py           CLI
   serve.py         the dashboard
-tests/             126 tests; test_verify.py and test_trust_boundary.py are the pitch
+tests/             133 tests; test_verify.py and test_trust_boundary.py are the pitch
 data/generated/    the committed seed-42 batch
 ```
+
+## The dashboard
+
+`python -m reconproof.serve`, then <http://127.0.0.1:8000>. Four screens, and
+the view lives in the URL - `#/ledger/bnk_0015` opens that credit's derivation.
+
+**The ledger.** One row per bank credit. Click a row and the derivation opens
+underneath it: the identity as an accounting statement, every source ID a link
+to the raw record, a single rule above the subtotal and a double rule under the
+total. Same-day post-and-reverse pairs are struck through rather than counted
+as failures.
+
+![The ledger with a verified derivation open](docs/screenshots/ledger.png)
+
+**The exception list.** Grouped by reason code, sorted by rupees at stake,
+every row saying what a human should actually check. This screen is the direct
+answer to the track's bar.
+
+![The exception list](docs/screenshots/exceptions.png)
+
+**The tamper demo.** Corrupt one source amount and re-verify. The proofs are
+not rebuilt - only the verifier reads the data again - so when the stamp flips
+to FAILED it flips because the arithmetic stopped holding, and the reason names
+the term that moved. The button calls the same `apply_tamper` and `verify` that
+the CLI's `--tamper` calls; nothing on this screen is mocked.
+
+![A failed derivation after tampering with pay_0031](docs/screenshots/failed-derivation.png)
+
+**The scorecard.** Match rate by record and by value, false-match rate,
+calibration, and the per-case-type breakdown with the weakest rows sorted to
+the top and flagged.
+
+![The scorecard](docs/screenshots/scorecard.png)
+
+Desktop only, 1280px and up. Mobile is not attempted rather than half-attempted.
+
+## More
 
 [ARCHITECTURE.md](ARCHITECTURE.md) has the diagram and the design trade-offs.
 [WHAT_BROKE.md](WHAT_BROKE.md) has the incidents.
