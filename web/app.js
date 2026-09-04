@@ -531,59 +531,87 @@ function verdictSnapshot() {
   return map;
 }
 
-function renderTamperResult(change, before) {
+/** Proofs whose member set contains a record, whatever their verdict. */
+function proofsTouching(recordId) {
+  return state.report.proofs.filter((proof) =>
+    Object.values(proof.members).some((ids) => ids.includes(recordId)),
+  );
+}
+
+/* The panel is rendered from `report.tampered`, which is server state, so a
+ * reload still shows what has been corrupted. `before` is the client's
+ * snapshot from the moment of the last submit and only adds the "was PASS"
+ * half of the sentence; without it the panel still tells the truth. */
+function renderTamper(before) {
   const log = document.getElementById("tamper-log");
-  const entry = el("div", { class: "tamper-entry" });
+  clear(log);
 
-  entry.appendChild(el("p", {
-    class: "what",
-    text: `${change.record_id}.${change.field}  ${rupees(change.before)} → ${rupees(change.after)}`,
-  }));
+  const changes = state.report.tampered;
+  if (!changes.length) {
+    log.appendChild(el("p", {
+      class: "empty",
+      text: "Nothing corrupted. Pick a record above and shift it by a few " +
+            "thousand paise: the verifier re-reads the source data, the " +
+            "affected derivation stops balancing, and its stamp flips to " +
+            "failed. Restore puts the batch back by re-reading the committed " +
+            "CSVs.",
+    }));
+    return;
+  }
 
-  const flipped = state.report.proofs.filter((proof) => {
-    const was = before.get(proof.proof_id);
-    return was && was.verdict !== proof.verdict;
-  });
+  for (const change of changes.slice().reverse()) {
+    const entry = el("div", { class: "tamper-entry" });
+    entry.appendChild(el("p", {
+      class: "what",
+      text: `${change.record_id}.${change.field}  ${rupees(change.before)} → ${rupees(change.after)}`,
+    }));
 
-  if (!flipped.length) {
+    const touched = proofsTouching(change.record_id);
+    const failing = touched.filter((proof) => proof.verdict !== "PASS");
+
+    if (!failing.length) {
+      entry.appendChild(el("p", {
+        class: "aside",
+        text: touched.length
+          ? "No verdict changed. Every proof holding that record had already failed."
+          : "No verdict changed: that record is not a member of any proof, so " +
+            "nothing depended on it.",
+      }));
+    }
+
+    for (const proof of failing) {
+      const was = before && before.get(proof.proof_id);
+      const line = el("p", { class: "flip" }, [
+        el("span", { text: `${proof.proof_id} · ${proof.bank_txn_id}  ` }),
+        was ? el("span", { class: "from", text: was.verdict }) : null,
+        was ? el("span", { text: " → " }) : null,
+        el("span", { class: "to", text: proof.verdict }),
+      ]);
+      if (proof.verdict_reason) {
+        line.appendChild(el("span", { class: "term", text: `   ${proof.verdict_reason}` }));
+      }
+      line.appendChild(el("span", {
+        class: "term",
+        text: `   residual ${residualText(proof.residual)}`,
+      }));
+      entry.appendChild(line);
+    }
+
     entry.appendChild(el("p", {
       class: "aside",
-      text: "No verdict changed. That record is not a member of any proof that " +
-            "was passing, so nothing depended on it.",
+      text: "The proofs were not rebuilt. The verifier re-read the source " +
+            "records and recomputed the identity, and that is the only thing " +
+            "that changed.",
     }));
+    log.appendChild(entry);
   }
+}
 
-  for (const proof of flipped) {
-    const was = before.get(proof.proof_id);
-    const line = el("p", { class: "flip" }, [
-      el("span", { text: `${proof.proof_id} · ${proof.bank_txn_id}  ` }),
-      el("span", { class: "from", text: was.verdict }),
-      el("span", { text: " → " }),
-      el("span", { class: "to", text: proof.verdict }),
-    ]);
-    if (proof.verdict_reason) {
-      line.appendChild(el("span", { class: "term", text: `   ${proof.verdict_reason}` }));
-    }
-    line.appendChild(el("span", { class: "term", text: `   residual ${residualText(proof.residual)}` }));
-    entry.appendChild(line);
-  }
-
-  entry.appendChild(el("p", {
-    class: "aside",
-    text: "The proofs were not rebuilt. The verifier re-read the source records " +
-          "and recomputed the identity, and that is the only thing that changed.",
-  }));
-
-  log.insertBefore(entry, log.firstChild);
-
-  // Re-stamp only the affected verdict. Everything else on the page stays put.
-  if (flipped.length && state.view === "ledger") {
-    const stamp = document.querySelector(`.stamp[data-proof-id="${flipped[0].proof_id}"]`);
-    if (stamp) {
-      stamp.classList.add("restamp");
-      stamp.addEventListener("animationend", () => stamp.classList.remove("restamp"), { once: true });
-    }
-  }
+function restamp(proofId) {
+  const stamp = document.querySelector(`.stamp[data-proof-id="${proofId}"]`);
+  if (!stamp) return;
+  stamp.classList.add("restamp");
+  stamp.addEventListener("animationend", () => stamp.classList.remove("restamp"), { once: true });
 }
 
 async function doTamper(event) {
@@ -592,22 +620,28 @@ async function doTamper(event) {
   const delta = Number(document.getElementById("tamper-delta").value);
   const before = verdictSnapshot();
   try {
-    const payload = await api("/api/tamper", {
+    state.report = await api("/api/tamper", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ record_id: recordId, delta_paise: delta }),
     });
-    state.report = payload;
     renderAll();
-    renderTamperResult(payload.last_change, before);
+    renderTamper(before);
+    const flipped = state.report.proofs.find((proof) => {
+      const was = before.get(proof.proof_id);
+      return was && was.verdict !== proof.verdict;
+    });
+    if (flipped) restamp(flipped.proof_id);
   } catch (error) {
-    document.getElementById("tamper-log").textContent = error.message;
+    clear(document.getElementById("tamper-log"));
+    document.getElementById("tamper-log").appendChild(
+      el("p", { class: "empty", text: error.message }),
+    );
   }
 }
 
 async function doRestore() {
   await load("/api/restore", { method: "POST" });
-  clear(document.getElementById("tamper-log"));
 }
 
 /* -- record sheet -------------------------------------------------------- */
@@ -680,6 +714,7 @@ function renderAll() {
   renderExceptions();
   renderScorecard();
   renderTamperControls();
+  renderTamper(null);
 }
 
 /* -- wiring -------------------------------------------------------------- */
