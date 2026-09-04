@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReconProof</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-title">
+    <h1>ReconProof</h1>
+    <p class="masthead-sub">Settlement reconciliation that proves every match, and abstains when it cannot.</p>
+  </div>
+  <p class="run-line" id="run-line">loading&hellip;</p>
+</header>
+
+<section class="summary" id="summary" aria-label="Headline figures"></section>
+
+<nav class="tabs" aria-label="Views">
+  <button class="tab" data-view="ledger" aria-current="page">Ledger</button>
+  <button class="tab" data-view="exceptions">Exceptions</button>
+  <button class="tab" data-view="scorecard">Scorecard</button>
+  <button class="tab" data-view="tamper">Tamper</button>
+</nav>
+
+<main>
+  <!-- Ledger ---------------------------------------------------------- -->
+  <section class="view" id="view-ledger">
+    <div class="controls">
+      <div class="chips" role="group" aria-label="Filter">
+        <button class="chip is-on" data-filter="all">All</button>
+        <button class="chip" data-filter="matched">Verified</button>
+        <button class="chip" data-filter="exception">Exceptions</button>
+      </div>
+      <label class="sort">
+        Sort by
+        <select id="ledger-sort">
+          <option value="date">value date</option>
+          <option value="amount">amount</option>
+          <option value="residual">residual</option>
+        </select>
+      </label>
+    </div>
+
+    <table class="ledger">
+      <caption class="sr-only">Bank credits and their verdicts</caption>
+      <colgroup>
+        <col class="w-id"><col class="w-date"><col class="w-narration">
+        <col class="w-amount"><col class="w-rule"><col class="w-amount"><col class="w-verdict">
+      </colgroup>
+      <thead>
+        <tr>
+          <th scope="col" class="col-id">Bank credit</th>
+          <th scope="col" class="col-date">Value date</th>
+          <th scope="col" class="col-narration">Narration</th>
+          <th scope="col" class="col-num">Amount</th>
+          <th scope="col" class="col-rule">Rule</th>
+          <th scope="col" class="col-num">Residual</th>
+          <th scope="col" class="col-verdict">Verdict</th>
+        </tr>
+      </thead>
+      <tbody id="ledger-body"></tbody>
+    </table>
+    <p class="empty" id="ledger-empty" hidden></p>
+  </section>
+
+  <!-- Exceptions ------------------------------------------------------ -->
+  <section class="view" id="view-exceptions" hidden>
+    <p class="lede" id="exceptions-lede"></p>
+    <div id="exceptions-groups"></div>
+  </section>
+
+  <!-- Scorecard ------------------------------------------------------- -->
+  <section class="view" id="view-scorecard" hidden>
+    <div class="scorecard-grid">
+      <div>
+        <h2>Headline</h2>
+        <table class="figures" id="scorecard-headline"></table>
+        <h2>Calibration</h2>
+        <p class="note">Every proof that balanced, bucketed by confidence, against whether it was actually right.</p>
+        <table class="figures" id="scorecard-calibration"></table>
+        <h2>The model</h2>
+        <table class="figures" id="scorecard-llm"></table>
+      </div>
+      <div>
+        <h2>Per case type</h2>
+        <p class="note">Each case type is injected at least twice, so a low row is a statement about the system and not a sampling artefact.</p>
+        <table class="figures" id="scorecard-cases"></table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tamper ---------------------------------------------------------- -->
+  <section class="view" id="view-tamper" hidden>
+    <p class="lede">
+      Corrupt one source amount. The proofs are <em>not</em> rebuilt &mdash; only the
+      verifier reads the data again. If a stamp flips, it flips because the
+      arithmetic stopped holding.
+    </p>
+
+    <form class="tamper-form" id="tamper-form">
+      <label>
+        Record
+        <select id="tamper-record"></select>
+      </label>
+      <label>
+        Shift by (paise)
+        <input type="number" id="tamper-delta" value="5000" step="1">
+      </label>
+      <button type="submit" class="button">Corrupt and re-verify</button>
+      <button type="button" class="button button-quiet" id="tamper-restore">Restore</button>
+    </form>
+
+    <div id="tamper-log" class="tamper-log" aria-live="polite"></div>
+  </section>
+</main>
+
+<div class="record-sheet" id="record-sheet" hidden role="dialog" aria-modal="true" aria-labelledby="record-sheet-title">
+  <div class="record-sheet-inner">
+    <div class="record-sheet-head">
+      <h2 id="record-sheet-title">Record</h2>
+      <button type="button" class="button button-quiet" id="record-close">Close</button>
+    </div>
+    <table class="figures" id="record-fields"></table>
+  </div>
+</div>
+
+<script type="module" src="/app.js"></script>
+</body>
+</html>

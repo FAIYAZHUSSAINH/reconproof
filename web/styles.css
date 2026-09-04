@@ -1,0 +1,544 @@
+/* ReconProof — greenbar ledger paper.
+ *
+ * The subject is accounting, and accounting has a visual language older than
+ * software: banded ledger stock, right-aligned figures in tabular columns,
+ * negatives in parentheses, a single rule above a subtotal and a double rule
+ * under a total, and a stamped verdict. This interface is a proof, not an
+ * analytics product, so it is built out of rules and alignment rather than
+ * cards and shadows.
+ *
+ * No gradients, no drop shadows, nothing outside the seven tokens below.
+ */
+
+:root {
+  --paper:      #F3F6F1;
+  --stripe:     #E4EBE0;
+  --ink:        #16211C;
+  --muted:      #6B7A72;
+  --stamp-pass: #2F6B4F;
+  --stamp-fail: #9B2C2C;
+  --flag:       #A2691E;
+
+  --sans: "IBM Plex Sans", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  /* Monospace for figures only. Reconciliation columns have to align to be
+   * scannable, and that alignment is the entire point of a ledger. */
+  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 15px/1.5 var(--sans);
+  min-width: 1100px;
+}
+
+h1, h2, h3 { font-weight: 600; margin: 0; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+/* Every figure in the interface, everywhere. */
+.num, td.num, th.col-num {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.neg { color: var(--flag); }
+.zero { color: var(--muted); }
+
+/* -- Masthead ------------------------------------------------------------ */
+
+.masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 22px 32px 14px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.masthead h1 { font-size: 34px; letter-spacing: -0.01em; }
+
+.masthead-sub {
+  margin: 4px 0 0;
+  font-size: 15px;
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+.run-line {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--muted);
+  text-align: right;
+  white-space: pre-line;
+}
+
+/* -- Summary strip ------------------------------------------------------- */
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  padding: 0 32px;
+  border-bottom: 1px solid var(--stripe);
+  background: var(--paper);
+}
+
+.summary-item {
+  padding: 14px 28px 14px 0;
+  margin-right: 28px;
+  border-right: 1px solid var(--stripe);
+}
+.summary-item:last-child { border-right: 0; }
+
+.summary-label {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.summary-value {
+  display: block;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.summary-value.is-good { color: var(--stamp-pass); }
+.summary-value.is-flag { color: var(--flag); }
+
+/* -- Tabs ---------------------------------------------------------------- */
+
+.tabs {
+  display: flex;
+  gap: 0;
+  padding: 0 32px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.tab {
+  appearance: none;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  background: none;
+  font: 400 15px var(--sans);
+  color: var(--muted);
+  padding: 10px 18px;
+  cursor: pointer;
+  position: relative;
+  top: 1px;
+}
+
+.tab:hover { color: var(--ink); }
+
+.tab[aria-current="page"] {
+  color: var(--ink);
+  font-weight: 600;
+  border-color: var(--ink);
+  background: var(--paper);
+}
+
+main { padding: 22px 32px 64px; }
+
+/* -- Controls ------------------------------------------------------------ */
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.chips { display: flex; gap: 8px; }
+
+.chip {
+  appearance: none;
+  border: 1px solid var(--muted);
+  background: none;
+  color: var(--muted);
+  font: 400 13px var(--sans);
+  padding: 4px 14px;
+  cursor: pointer;
+}
+
+.chip:hover { color: var(--ink); border-color: var(--ink); }
+
+.chip.is-on {
+  color: var(--paper);
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.sort { font-size: 13px; color: var(--muted); }
+
+.sort select {
+  font: 400 13px var(--sans);
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--muted);
+  padding: 4px 6px;
+  margin-left: 6px;
+}
+
+/* -- The ledger ---------------------------------------------------------- */
+
+table.ledger {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  /* Fixed layout so the figure columns stay put as rows open and close.
+   * A ledger whose columns reflow when you expand a line is not a ledger. */
+  table-layout: fixed;
+}
+
+col.w-id       { width: 152px; }
+col.w-date     { width: 118px; }
+col.w-narration{ width: auto;  }
+col.w-amount   { width: 148px; }
+col.w-rule     { width: 142px; }
+col.w-verdict  { width: 186px; }
+
+td.col-narration {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+th.col-narration { text-align: left; }
+
+table.ledger thead th {
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--ink);
+}
+
+table.ledger thead th.col-num { text-align: right; }
+
+/* The greenbar: alternating bands, applied per credit and not per <tr>,
+ * so a row and its derivation panel share one band. */
+tbody.band { background: transparent; }
+tbody.band.alt { background: var(--stripe); }
+
+tr.ledger-row > * { padding: 7px 12px; border-bottom: 1px solid var(--stripe); }
+tr.ledger-row { cursor: pointer; }
+tr.ledger-row:hover > * { background: rgba(22, 33, 28, 0.045); }
+tr.ledger-row:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+
+td.col-id, td.col-rule { font-family: var(--mono); font-size: 13px; white-space: nowrap; }
+td.col-date { color: var(--muted); font-size: 14px; white-space: nowrap; }
+
+.disclosure {
+  display: inline-block;
+  width: 1em;
+  color: var(--muted);
+}
+
+.verdict-word { font-weight: 600; }
+.verdict-word.pass { color: var(--stamp-pass); }
+.verdict-word.fail { color: var(--stamp-fail); }
+.reason-code {
+  display: block;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--flag);
+}
+
+/* -- The derivation panel ------------------------------------------------ */
+
+tr.derivation-row > td { padding: 0 12px 20px 40px; }
+
+.derivation {
+  max-width: 640px;
+  border-left: 2px solid var(--ink);
+  padding: 14px 0 10px 18px;
+  position: relative;
+}
+
+.derivation h3 {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+table.terms { width: 100%; border-collapse: collapse; }
+
+table.terms td { padding: 3px 0; font-size: 15px; }
+table.terms td.num { width: 42%; }
+table.terms td.label { color: var(--ink); }
+
+/* A single rule above a subtotal, a double rule under the total. This is
+ * the actual convention, and getting it right is most of why the panel
+ * reads as a ledger rather than as a list. */
+tr.rule-single td { border-top: 1px solid var(--ink); padding-top: 7px; }
+tr.rule-double td { border-top: 3px double var(--ink); padding-top: 7px; }
+
+.term-sources {
+  display: block;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 1px;
+}
+
+.id-link {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0 8px 2px 0;
+  font: 400 12px var(--mono);
+  color: var(--muted);
+  text-decoration: underline dotted;
+  cursor: pointer;
+}
+.id-link:hover { color: var(--ink); }
+
+.derivation-note {
+  margin: 10px 0 0;
+  font-size: 14px;
+  color: var(--flag);
+  max-width: 58ch;
+}
+
+.derivation-meta {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* -- The stamp ----------------------------------------------------------- */
+/* The one bold element in the interface. Everything else stays still. */
+
+.stamp {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 5px 16px;
+  border: 2px solid currentColor;
+  border-radius: 5px;
+  font: 600 15px var(--sans);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transform: rotate(-4deg);
+  transform-origin: left center;
+}
+
+.stamp.pass { color: var(--stamp-pass); }
+.stamp.fail { color: var(--stamp-fail); }
+
+.stamp.restamp { animation: restamp 180ms ease-out; }
+
+@keyframes restamp {
+  from { transform: rotate(-4deg) scale(1.15); }
+  to   { transform: rotate(-4deg) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp.restamp { animation: none; }
+}
+
+/* -- Exceptions ---------------------------------------------------------- */
+
+.lede { font-size: 18px; max-width: 70ch; margin: 0 0 20px; }
+.note { font-size: 13px; color: var(--muted); max-width: 62ch; margin: 4px 0 10px; }
+
+.exception-group { margin-bottom: 30px; }
+
+.exception-group h2 {
+  font-family: var(--mono);
+  font-size: 15px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--ink);
+  display: flex;
+  justify-content: space-between;
+}
+
+.exception-group h2 .count { color: var(--muted); font-weight: 400; font-size: 13px; }
+
+/* Fixed layout with the same columns in every group, so the figures line up
+ * down the whole screen and not just within one reason code. */
+table.exceptions { width: 100%; border-collapse: collapse; table-layout: fixed; }
+col.x-subject { width: 132px; }
+col.x-amount  { width: 148px; }
+col.x-records { width: 224px; }
+table.exceptions th {
+  text-align: left; font-size: 13px; font-weight: 600; color: var(--muted);
+  padding: 6px 12px 6px 0; border-bottom: 1px solid var(--stripe);
+}
+table.exceptions th.col-num { text-align: right; }
+table.exceptions td {
+  padding: 8px 12px 8px 0;
+  border-bottom: 1px solid var(--stripe);
+  vertical-align: top;
+}
+table.exceptions td.subject { font-family: var(--mono); font-size: 13px; white-space: nowrap; }
+table.exceptions td.check { color: var(--ink); max-width: 52ch; font-size: 14px; }
+table.exceptions td.records { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+/* -- Scorecard ----------------------------------------------------------- */
+
+.scorecard-grid {
+  display: grid;
+  grid-template-columns: minmax(360px, 1fr) minmax(420px, 1fr);
+  gap: 44px;
+  align-items: start;
+}
+
+.scorecard-grid h2 {
+  font-size: 18px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--ink);
+  margin: 28px 0 6px;
+}
+.scorecard-grid h2:first-child { margin-top: 0; }
+
+table.figures { width: 100%; border-collapse: collapse; }
+table.figures th {
+  text-align: left; font-size: 13px; font-weight: 600; color: var(--muted);
+  padding: 6px 10px 6px 0; border-bottom: 1px solid var(--stripe);
+}
+table.figures th.col-num { text-align: right; }
+table.figures td { padding: 5px 10px 5px 0; border-bottom: 1px solid var(--stripe); font-size: 14px; }
+table.figures tr.headline td { font-size: 15px; }
+table.figures td.key { color: var(--muted); }
+table.figures tr.is-weak td { color: var(--flag); }
+table.figures tr.is-weak td.key { color: var(--flag); }
+
+/* -- Tamper -------------------------------------------------------------- */
+
+.tamper-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  padding: 16px 0 20px;
+  border-bottom: 1px solid var(--stripe);
+  margin-bottom: 20px;
+}
+
+.tamper-form label { font-size: 13px; color: var(--muted); display: block; }
+
+.tamper-form select,
+.tamper-form input {
+  display: block;
+  margin-top: 4px;
+  font: 400 14px var(--mono);
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--muted);
+  padding: 6px 8px;
+  min-width: 200px;
+}
+
+.button {
+  appearance: none;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  font: 400 14px var(--sans);
+  padding: 7px 18px;
+  cursor: pointer;
+}
+.button:hover { background: #0d1512; }
+
+.button-quiet {
+  background: none;
+  color: var(--ink);
+}
+.button-quiet:hover { background: var(--stripe); }
+
+.tamper-entry {
+  border-left: 2px solid var(--ink);
+  padding: 2px 0 2px 16px;
+  margin-bottom: 22px;
+}
+
+.tamper-entry .what {
+  font-family: var(--mono);
+  font-size: 14px;
+  margin: 0 0 8px;
+}
+
+.tamper-entry .flip {
+  font-size: 15px;
+  margin: 0 0 4px;
+}
+
+.tamper-entry .flip .from { color: var(--stamp-pass); font-weight: 600; }
+.tamper-entry .flip .to { color: var(--stamp-fail); font-weight: 600; }
+.tamper-entry .flip .term { font-family: var(--mono); font-size: 13px; }
+
+.tamper-entry .aside { font-size: 13px; color: var(--muted); margin: 8px 0 0; max-width: 64ch; }
+
+/* -- Record sheet -------------------------------------------------------- */
+
+/* `hidden` has to win over the flex display below, or the sheet is on screen
+ * from the first paint. */
+.record-sheet[hidden] { display: none; }
+
+.record-sheet {
+  position: fixed;
+  inset: 0;
+  background: rgba(22, 33, 28, 0.28);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 12vh;
+}
+
+.record-sheet-inner {
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  padding: 20px 24px 24px;
+  width: 520px;
+  max-height: 70vh;
+  overflow: auto;
+}
+
+.record-sheet-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+.record-sheet-head h2 { font-family: var(--mono); font-size: 18px; }
+
+.empty {
+  color: var(--muted);
+  font-size: 15px;
+  padding: 28px 0;
+  max-width: 60ch;
+}
+
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+/* -- Neutralised reversal pairs ------------------------------------------ */
+/* A credit posted in error and pulled back the same day. Neither matched nor
+ * an exception: two lines that cancel, shown greyed so the batch reads
+ * honestly rather than looking like two failures. */
+
+tr.ledger-row.is-neutralised td { color: var(--muted); }
+tr.ledger-row.is-neutralised td.col-id { text-decoration: line-through; }
+.verdict-word.neutral { color: var(--muted); font-weight: 400; }
