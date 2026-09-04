@@ -773,3 +773,85 @@ def format_derivation(proof: Proof) -> str:
 def print_derivation(proof: Proof) -> None:
     print()
     print(format_derivation(proof))
+
+
+# --------------------------------------------------------------------------
+# The ledger view model, for the dashboard.
+# --------------------------------------------------------------------------
+
+
+def build_ledger(result: PipelineResult, truth: GroundTruth) -> list[dict]:
+    """One row per bank credit, in the order the statement shows them.
+
+    Built here rather than in `serve.py` because it needs the ground-truth
+    labels, and ground truth is loaded in exactly one module. It is not
+    written into `report.json`: the dashboard is a view, and a view has no
+    business inflating the machine-readable record.
+    """
+    best: dict[str, Proof] = {}
+    for proof in result.proofs:
+        for txn_id in proof.members.get("bank_txn_ids", []):
+            current = best.get(txn_id)
+            # Prefer an accepted proof, then a passing one, then whichever
+            # got closest, so an unmatched credit still shows its nearest
+            # attempt rather than an arbitrary one.
+            rank = (
+                proof.proof_id in {p.proof_id for p in result.accepted},
+                proof.verdict == "PASS",
+                -abs(proof.residual),
+            )
+            if current is None or rank > (
+                current.proof_id in {p.proof_id for p in result.accepted},
+                current.verdict == "PASS",
+                -abs(current.residual),
+            ):
+                best[txn_id] = proof
+
+    accepted_ids = {proof.proof_id for proof in result.accepted}
+    exceptions_by_subject: dict[str, ExceptionRecord] = {
+        exception.subject_id: exception for exception in result.exceptions
+    }
+    # A credit posted in error and pulled back the same day is neither a match
+    # nor an exception - it is two lines that cancel. Showing it as "could not
+    # match" would be a lie about the batch, so it gets its own status and is
+    # excluded from the denominator everywhere else too.
+    neutralised = {
+        txn_id: other
+        for pair in result.candidate_set.neutralised_pairs
+        for txn_id, other in (pair, tuple(reversed(pair)))
+    }
+
+    rows: list[dict] = []
+    for txn_id, txn in sorted(result.store.bank_txns.items()):
+        proof = best.get(txn_id)
+        exception = exceptions_by_subject.get(txn_id)
+        matched = bool(proof and proof.proof_id in accepted_ids)
+        if txn_id in neutralised:
+            status = "neutralised"
+        elif matched:
+            status = "matched"
+        else:
+            status = "exception"
+        rows.append(
+            {
+                "bank_txn_id": txn_id,
+                "value_date": txn.value_date.isoformat(),
+                "narration": txn.narration,
+                "credit_amount": txn.credit_amount,
+                "status": status,
+                "reversed_by": neutralised.get(txn_id),
+                "rule": proof.rule if proof else None,
+                "proof_id": proof.proof_id if proof else None,
+                "settlement_ids": proof.members.get("settlement_ids", []) if proof else [],
+                "residual": proof.residual if proof else None,
+                "confidence": proof.confidence if proof else None,
+                "verdict": proof.verdict if proof else None,
+                "verdict_reason": proof.verdict_reason if proof else None,
+                "reason_code": exception.reason_code if exception else None,
+                "what_to_check": exception.what_to_check if exception else None,
+                # The generator's label. Shown so the weak rows are findable,
+                # and never read by anything upstream of this function.
+                "case_type": truth.case_of_bank_txn(txn_id),
+            }
+        )
+    return rows
