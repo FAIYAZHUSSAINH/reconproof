@@ -2,10 +2,10 @@
   "run": {
     "seed": 42,
     "difficulty": "standard",
-    "generated_at": "2026-09-04T12:58:19+00:00",
+    "generated_at": "2026-09-04T13:00:52+00:00",
     "python": "3.12.10",
     "platform": "Windows",
-    "argv": "C:\\Users\\ASUS\\Desktop\\Razorpay\\reconproof\\src\\reconproof\\run.py --no-llm --seed 42 --quiet",
+    "flags": "--no-llm --seed 42 --quiet",
     "tampered_record": null,
     "abstain_below": 0.75,
     "tolerance_paise": 0,
@@ -19,8 +19,8 @@
     "settlements": 27,
     "bank_txns": 31,
     "records": 366,
-    "wall_clock_seconds": 0.012,
-    "records_per_second": 29763.4
+    "wall_clock_seconds": 0.009,
+    "records_per_second": 40621.5
   },
   "metrics": {
     "auto_match_rate_records": 0.6667,

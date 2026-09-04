@@ -14,7 +14,7 @@ Committed scorecard for `--seed 42 --difficulty standard --no-llm`. Reproduce it
 | Exception coverage | 100.0% of unmatched credits carry a typed reason |
 | Diagnosis accuracy | 100.0% (12/12 unmatched units given the right reason code) |
 | Handled correctly | 100.0% (30/30 labelled units either proved or correctly flagged) |
-| Throughput | 366 records in 0.012s (29763.4 records/sec) |
+| Throughput | 366 records in 0.009s (40621.5 records/sec) |
 | LLM adjudication | disabled (`--no-llm`) |
 
 ## Per case type
