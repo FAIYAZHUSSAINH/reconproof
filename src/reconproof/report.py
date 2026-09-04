@@ -209,7 +209,9 @@ def build_scorecard(
             "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "python": platform.python_version(),
             "platform": platform.system(),
-            "argv": " ".join(sys.argv),
+            # Flags only. sys.argv[0] is an absolute path, and a home
+            # directory has no business in a committed artefact.
+            "flags": " ".join(sys.argv[1:]),
             "tampered_record": tampered,
             **result.params,
         },
