@@ -13,7 +13,7 @@ python -m venv .venv
 .venv\Scripts\activate            # Windows;  source .venv/bin/activate elsewhere
 pip install -r requirements.txt
 
-python -m pytest -q               # 133 tests, including the ones that attack the verifier
+python -m pytest -q               # 135 tests, including the ones that attack the verifier
 .\run.ps1                         # or:  PYTHONPATH=src python -m reconproof.run --no-llm --seed 42
 ```
 
@@ -246,7 +246,7 @@ src/reconproof/
   report.py        scorecard, RESULTS.md, report.json
   run.py           CLI
   serve.py         the dashboard
-tests/             133 tests; test_verify.py and test_trust_boundary.py are the pitch
+tests/             135 tests; test_verify.py and test_trust_boundary.py are the pitch
 data/generated/    the committed seed-42 batch
 ```
 
