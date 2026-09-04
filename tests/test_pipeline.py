@@ -231,3 +231,46 @@ class TestAmbiguityIsNotResolvedByLuck:
         assert self.COLLIDING <= matched
         guessed = [p for p in reckless.accepted if set(p.members["bank_txn_ids"]) & self.COLLIDING]
         assert all(p.confidence == 0.50 for p in guessed)
+
+
+class TestIntegrityFailuresAreTypedHonestly:
+    """A rejected *proof* is not a reconciliation difference.
+
+    Before this, tampering with a payment filed UNEXPLAINED_RESIDUAL against
+    the credit and told a human to go and read the gateway's settlement
+    report. The verifier knew perfectly well that the gross payments term no
+    longer matched the records; the exception threw that away and filed the
+    wrong diagnosis in a queue somebody has to work.
+    """
+
+    def test_a_tampered_payment_is_filed_as_a_changed_record(self, store):
+        result = run_pipeline(store)
+        target = next(p for p in result.accepted if p.members["payment_ids"])
+        apply_tamper(store, target.members["payment_ids"][0], 5_000)
+        after = reverify(result, store)
+
+        filed = next(
+            e for e in after.exceptions if e.subject_id == target.bank_txn_id
+        )
+        assert filed.reason_code == "SOURCE_RECORD_CHANGED"
+        # The verifier's own words survive into the human-facing advice.
+        assert "TERM_MISMATCH:Gross payments" in filed.what_to_check
+
+    def test_the_code_is_a_declared_one(self, store):
+        result = run_pipeline(store)
+        target = next(p for p in result.accepted if p.members["payment_ids"])
+        apply_tamper(store, target.members["payment_ids"][0], 5_000)
+        after = reverify(result, store)
+        for exception in after.exceptions:
+            assert exception.reason_code in REASON_CODES
+
+    def test_a_forged_proof_is_not_called_a_residual(self, store):
+        from reconproof.pipeline import integrity_code
+
+        assert integrity_code("FORGED_COMPUTED_NET") == "INVALID_PROOF"
+        assert integrity_code("MISSING_RECORD:pay_9999") == "INVALID_PROOF"
+        assert integrity_code("INELIGIBLE_MEMBER:pay_0002") == "INVALID_PROOF"
+        # An ordinary residual is not an integrity failure and must fall
+        # through to the money-shaped taxonomy.
+        assert integrity_code("SUSPECT_UNAPPLIED_REFUND") is None
+        assert integrity_code(None) is None

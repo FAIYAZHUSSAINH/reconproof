@@ -141,3 +141,36 @@ this batch — what it buys is the refusal to answer a question the data cannot 
 That is a weaker sentence and a true one. The honest version of the argument for
 abstaining is not that it improves a metric; it is that the metric could not have told
 me the difference.
+
+---
+
+## 2026-09-04 — The dashboard caught the CLI filing the wrong diagnosis
+
+**Symptom.** Building the ledger screen, I opened a tampered credit and the row said
+`UNEXPLAINED_RESIDUAL` while the derivation panel one line below it said
+`TERM_MISMATCH:Gross payments`. Two views of the same proof, disagreeing about what had
+gone wrong.
+
+**Diagnosis.** The verifier was right; the exception layer was not. `build_exceptions`
+takes the verifier's reason, splits it at the colon and looks it up in the guidance
+table — and when the code is not there, it fell back to `UNEXPLAINED_RESIDUAL`. There
+was even a comment saying integrity failures "keep their full reason string", directly
+above the two lines that threw it away. So a proof rejected because the *data had moved
+underneath it* was filed against a human's queue as a reconciliation difference, with
+advice to go and read the gateway's settlement report. That advice would have wasted
+somebody's afternoon: there is no difference to find, the match was simply built from a
+record that has since changed.
+
+This is a rule-7 violation in the one place I would not have looked for it. Every
+exception was typed. One of them was typed *wrongly*, which is worse than untyped,
+because it is confidently wrong.
+
+**Fix.** Two new reason codes with their own guidance — `SOURCE_RECORD_CHANGED` for a
+term that no longer recomputes, `INVALID_PROOF` for a proof that fails the verifier's
+integrity checks — and the verifier's full reason string now travels into the advice
+text. `TestIntegrityFailuresAreTypedHonestly` asserts all of it.
+
+**The number that got worse.** The exception taxonomy went from 13 reason codes to 15,
+and two of them describe failures of my own pipeline rather than of the merchant's
+books. That is the honest shape of it: some of what a reconciler cannot explain is the
+reconciler's fault, and the queue should say which.

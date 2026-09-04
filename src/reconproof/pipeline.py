@@ -155,7 +155,41 @@ GUIDANCE = {
         "Order {ids} was paid {residual} more than its value. Check for a "
         "duplicate capture before refunding anything."
     ),
+    "SOURCE_RECORD_CHANGED": (
+        "The verifier recomputed this payout from the raw records and got a "
+        "different answer from the one the proof was built with ({ids}). A "
+        "source record changed after the match was proposed. Re-run the "
+        "reconciliation; if the difference persists, the gateway has restated "
+        "its settlement report."
+    ),
+    "INVALID_PROOF": (
+        "The proof did not survive the verifier's own integrity checks "
+        "({ids}). This is not a reconciliation difference - the proof names a "
+        "record that does not exist, a payment that never completed, or "
+        "figures that contradict each other. Nothing should be matched on it."
+    ),
 }
+
+# Verifier reasons that are about the proof rather than about the money, and
+# the exception code each maps to.
+INTEGRITY_PREFIXES = (
+    ("TERM_MISMATCH", "SOURCE_RECORD_CHANGED"),
+    ("TERM_MISSING", "SOURCE_RECORD_CHANGED"),
+    ("TERM_NOT_SUPPORTED", "SOURCE_RECORD_CHANGED"),
+    ("FORGED_", "INVALID_PROOF"),
+    ("MISSING_RECORD", "INVALID_PROOF"),
+    ("INELIGIBLE_MEMBER", "INVALID_PROOF"),
+    ("DUPLICATE_MEMBER", "INVALID_PROOF"),
+    ("NO_BANK_CREDIT", "INVALID_PROOF"),
+)
+
+
+def integrity_code(verdict_reason: str | None) -> str | None:
+    """Map a verifier integrity failure to its exception code, or None."""
+    for prefix, code in INTEGRITY_PREFIXES:
+        if (verdict_reason or "").startswith(prefix):
+            return code
+    return None
 
 
 def _guidance(reason: str, ids: list[str], residual: int) -> str:
@@ -326,13 +360,20 @@ def build_exceptions(
             # Nothing balanced. The closest attempt is the most informative
             # one: smallest unexplained amount, strongest rule to break ties.
             best = min(related, key=lambda p: (abs(p.residual), -p.confidence, p.proof_id))
-            reason = (best.verdict_reason or "UNEXPLAINED_RESIDUAL").split(":")[0]
-            ids = _suspect_ids(best)
-            if reason not in GUIDANCE:
-                # Verifier integrity failures (TERM_MISMATCH, FORGED_*) keep
-                # their full reason string; they are not ordinary exceptions.
+            integrity = integrity_code(best.verdict_reason)
+            if integrity is not None:
+                # The verifier rejected the proof, not the arithmetic. Calling
+                # that an unexplained residual would file the wrong diagnosis
+                # against a human's queue, so it keeps its own code and the
+                # full reason string travels with it.
+                reason = integrity
                 ids = [best.verdict_reason or ""]
-                reason = "UNEXPLAINED_RESIDUAL"
+            else:
+                reason = (best.verdict_reason or "UNEXPLAINED_RESIDUAL").split(":")[0]
+                ids = _suspect_ids(best)
+                if reason not in GUIDANCE:
+                    reason = "UNEXPLAINED_RESIDUAL"
+                    ids = _suspect_ids(best)
 
         records_involved = sorted(
             set(best.members.get("bank_txn_ids", []) + best.members.get("settlement_ids", []) + ids)

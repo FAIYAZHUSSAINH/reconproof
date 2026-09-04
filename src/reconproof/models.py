@@ -79,6 +79,11 @@ REASON_CODES: tuple[str, ...] = (
     "NO_CANDIDATE",
     "SHORT_PAYMENT",
     "OVERPAYMENT",
+    # The verifier disagreed with the proof itself rather than with the money.
+    # Kept as their own codes because "could not match" would be a lie about
+    # what happened: nothing here is a reconciliation difference.
+    "SOURCE_RECORD_CHANGED",
+    "INVALID_PROOF",
 )
 
 
