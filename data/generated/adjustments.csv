@@ -1,0 +1,5 @@
+adjustment_id,kind,amount,ref_payment_id,created_at
+adj_0001,chargeback_deduction,477418,pay_0019,2026-08-15T11:47:28
+adj_0002,chargeback_reversal,477418,,2026-08-06T12:17:21
+adj_0003,chargeback_deduction,974594,pay_0004,2026-09-14T12:45:10
+adj_0004,chargeback_reversal,974594,,2026-09-03T15:54:30

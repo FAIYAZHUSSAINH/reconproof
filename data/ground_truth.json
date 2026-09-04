@@ -1,0 +1,550 @@
+{
+  "_comment": "Answer key. Loaded by report.py only, never by the pipeline. The CSVs in data/generated contain no labels.",
+  "seed": 42,
+  "difficulty": "standard",
+  "cycle_days": 2,
+  "matches": [
+    {
+      "case_type": "CLEAN",
+      "settlement_ids": [
+        "set_0001"
+      ],
+      "bank_txn_ids": [
+        "bnk_0001"
+      ],
+      "payment_ids": [
+        "pay_0001",
+        "pay_0002",
+        "pay_0003",
+        "pay_0004"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [],
+      "note": ""
+    },
+    {
+      "case_type": "CLEAN",
+      "settlement_ids": [
+        "set_0002"
+      ],
+      "bank_txn_ids": [
+        "bnk_0002"
+      ],
+      "payment_ids": [
+        "pay_0006",
+        "pay_0007",
+        "pay_0008",
+        "pay_0009",
+        "pay_0010",
+        "pay_0011"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [],
+      "note": ""
+    },
+    {
+      "case_type": "CLEAN",
+      "settlement_ids": [
+        "set_0003"
+      ],
+      "bank_txn_ids": [
+        "bnk_0003"
+      ],
+      "payment_ids": [
+        "pay_0013",
+        "pay_0014",
+        "pay_0015",
+        "pay_0016",
+        "pay_0017",
+        "pay_0018",
+        "pay_0019"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [],
+      "note": ""
+    },
+    {
+      "case_type": "CLEAN",
+      "settlement_ids": [
+        "set_0004"
+      ],
+      "bank_txn_ids": [
+        "bnk_0004"
+      ],
+      "payment_ids": [
+        "pay_0021",
+        "pay_0022",
+        "pay_0023",
+        "pay_0024",
+        "pay_0025",
+        "pay_0026",
+        "pay_0027"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [],
+      "note": ""
+    },
+    {
+      "case_type": "CLEAN",
+      "settlement_ids": [
+        "set_0005"
+      ],
+      "bank_txn_ids": [
+        "bnk_0005"
+      ],
+      "payment_ids": [
+        "pay_0029",
+        "pay_0030",
+        "pay_0031",
+        "pay_0032",
+        "pay_0033"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [],
+      "note": ""
+    },
+    {
+      "case_type": "NARRATION_NOISE",
+      "settlement_ids": [
+        "set_0006"
+      ],
+      "bank_txn_ids": [
+        "bnk_0006"
+      ],
+      "payment_ids": [
+        "pay_0035",
+        "pay_0036",
+        "pay_0037",
+        "pay_0038",
+        "pay_0039",
+        "pay_0040",
+        "pay_0041"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [],
+      "note": ""
+    },
+    {
+      "case_type": "WITH_REFUND",
+      "settlement_ids": [
+        "set_0007"
+      ],
+      "bank_txn_ids": [
+        "bnk_0007"
+      ],
+      "payment_ids": [
+        "pay_0042",
+        "pay_0043",
+        "pay_0044",
+        "pay_0045"
+      ],
+      "refund_ids": [
+        "rfnd_0001"
+      ],
+      "adjustment_ids": [],
+      "note": "refund dated inside the settlement cycle"
+    },
+    {
+      "case_type": "CHARGEBACK_DEDUCTION",
+      "settlement_ids": [
+        "set_0008"
+      ],
+      "bank_txn_ids": [
+        "bnk_0008"
+      ],
+      "payment_ids": [
+        "pay_0046",
+        "pay_0047",
+        "pay_0048",
+        "pay_0049",
+        "pay_0050",
+        "pay_0051"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [
+        "adj_0001"
+      ],
+      "note": ""
+    },
+    {
+      "case_type": "SPLIT_SETTLEMENT",
+      "settlement_ids": [
+        "set_0009"
+      ],
+      "bank_txn_ids": [
+        "bnk_0009",
+        "bnk_0010"
+      ],
+      "payment_ids": [
+        "pay_0052",
+        "pay_0053",
+        "pay_0054",
+        "pay_0055"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [],
+      "note": "paid in two legs (same_utr)"
+    },
+    {
+      "case_type": "ROUNDING_DRIFT",
+      "settlement_ids": [
+        "set_0010"
+      ],
+      "bank_txn_ids": [
+        "bnk_0011"
+      ],
+      "payment_ids": [
+        "pay_0056",
+        "pay_0057",
+        "pay_0058",
+        "pay_0059",
+        "pay_0060",
+        "pay_0061"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [],
+      "note": "batch-level GST differs from line-level GST by -1 paise"
+    },
+    {
+      "case_type": "DUPLICATE_UTR",
+      "settlement_ids": [
+        "set_0012"
+      ],
+      "bank_txn_ids": [
+        "bnk_0014"
+      ],
+      "payment_ids": [
+        "pay_0067",
+        "pay_0068",
+        "pay_0069",
+        "pay_0070"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [],
+      "note": "bnk_0012 was posted and reversed same day under the same UTR; bnk_0014 is the real credit"
+    },
+    {
+      "case_type": "UNLABELLED_REVERSAL",
+      "settlement_ids": [
+        "set_0013"
+      ],
+      "bank_txn_ids": [
+        "bnk_0015"
+      ],
+      "payment_ids": [
+        "pay_0071",
+        "pay_0072",
+        "pay_0073",
+        "pay_0074",
+        "pay_0075",
+        "pay_0076",
+        "pay_0077"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [
+        "adj_0002"
+      ],
+      "note": "reverses the chargeback deducted as adj_0001"
+    },
+    {
+      "case_type": "MERGED_CREDIT",
+      "settlement_ids": [
+        "set_0014",
+        "set_0015"
+      ],
+      "bank_txn_ids": [
+        "bnk_0016"
+      ],
+      "payment_ids": [
+        "pay_0078",
+        "pay_0079",
+        "pay_0080",
+        "pay_0081",
+        "pay_0082",
+        "pay_0083",
+        "pay_0084",
+        "pay_0085",
+        "pay_0086",
+        "pay_0087",
+        "pay_0088",
+        "pay_0089"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [],
+      "note": "two settlements paid as one credit (no_utr)"
+    },
+    {
+      "case_type": "AMOUNT_COLLISION",
+      "settlement_ids": [
+        "set_0016"
+      ],
+      "bank_txn_ids": [
+        "bnk_0018"
+      ],
+      "payment_ids": [
+        "pay_0090",
+        "pay_0091",
+        "pay_0092",
+        "pay_0093",
+        "pay_0094"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [],
+      "note": "identical net to another settlement; UTR truncated on the statement"
+    },
+    {
+      "case_type": "AMOUNT_COLLISION",
+      "settlement_ids": [
+        "set_0017"
+      ],
+      "bank_txn_ids": [
+        "bnk_0019"
+      ],
+      "payment_ids": [
+        "pay_0095",
+        "pay_0096",
+        "pay_0097",
+        "pay_0098",
+        "pay_0099"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [],
+      "note": "identical net to another settlement; UTR truncated on the statement"
+    },
+    {
+      "case_type": "WITH_REFUND",
+      "settlement_ids": [
+        "set_0018"
+      ],
+      "bank_txn_ids": [
+        "bnk_0020"
+      ],
+      "payment_ids": [
+        "pay_0100",
+        "pay_0101",
+        "pay_0102",
+        "pay_0103",
+        "pay_0104",
+        "pay_0105",
+        "pay_0106"
+      ],
+      "refund_ids": [
+        "rfnd_0002"
+      ],
+      "adjustment_ids": [],
+      "note": "refund dated to the customer request, outside this cycle"
+    },
+    {
+      "case_type": "SPLIT_SETTLEMENT",
+      "settlement_ids": [
+        "set_0019"
+      ],
+      "bank_txn_ids": [
+        "bnk_0021",
+        "bnk_0022"
+      ],
+      "payment_ids": [
+        "pay_0107",
+        "pay_0108",
+        "pay_0109",
+        "pay_0110",
+        "pay_0111"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [],
+      "note": "paid in two legs (diff_utr)"
+    },
+    {
+      "case_type": "MERGED_CREDIT",
+      "settlement_ids": [
+        "set_0020",
+        "set_0021"
+      ],
+      "bank_txn_ids": [
+        "bnk_0023"
+      ],
+      "payment_ids": [
+        "pay_0112",
+        "pay_0113",
+        "pay_0114",
+        "pay_0115",
+        "pay_0116",
+        "pay_0117",
+        "pay_0118",
+        "pay_0119",
+        "pay_0120"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [],
+      "note": "two settlements paid as one credit (utr_of_first)"
+    },
+    {
+      "case_type": "NARRATION_NOISE",
+      "settlement_ids": [
+        "set_0022"
+      ],
+      "bank_txn_ids": [
+        "bnk_0024"
+      ],
+      "payment_ids": [
+        "pay_0121",
+        "pay_0122",
+        "pay_0123",
+        "pay_0124"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [],
+      "note": ""
+    },
+    {
+      "case_type": "CHARGEBACK_DEDUCTION",
+      "settlement_ids": [
+        "set_0023"
+      ],
+      "bank_txn_ids": [
+        "bnk_0025"
+      ],
+      "payment_ids": [
+        "pay_0125",
+        "pay_0126",
+        "pay_0127",
+        "pay_0128",
+        "pay_0129",
+        "pay_0130"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [
+        "adj_0003"
+      ],
+      "note": ""
+    },
+    {
+      "case_type": "ROUNDING_DRIFT",
+      "settlement_ids": [
+        "set_0024"
+      ],
+      "bank_txn_ids": [
+        "bnk_0026"
+      ],
+      "payment_ids": [
+        "pay_0131",
+        "pay_0132",
+        "pay_0133",
+        "pay_0134",
+        "pay_0135",
+        "pay_0136"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [],
+      "note": "batch-level GST differs from line-level GST by 1 paise"
+    },
+    {
+      "case_type": "DUPLICATE_UTR",
+      "settlement_ids": [
+        "set_0026"
+      ],
+      "bank_txn_ids": [
+        "bnk_0029"
+      ],
+      "payment_ids": [
+        "pay_0143",
+        "pay_0144",
+        "pay_0145",
+        "pay_0146"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [],
+      "note": "bnk_0027 was posted and reversed same day under the same UTR; bnk_0029 is the real credit"
+    },
+    {
+      "case_type": "UNLABELLED_REVERSAL",
+      "settlement_ids": [
+        "set_0027"
+      ],
+      "bank_txn_ids": [
+        "bnk_0030"
+      ],
+      "payment_ids": [
+        "pay_0147",
+        "pay_0148",
+        "pay_0149",
+        "pay_0150",
+        "pay_0151"
+      ],
+      "refund_ids": [],
+      "adjustment_ids": [
+        "adj_0004"
+      ],
+      "note": "reverses the chargeback deducted as adj_0003"
+    }
+  ],
+  "unmatched_settlements": [
+    {
+      "settlement_id": "set_0011",
+      "case_type": "MISSING_BANK_CREDIT",
+      "payment_ids": [
+        "pay_0062",
+        "pay_0063",
+        "pay_0064",
+        "pay_0065",
+        "pay_0066"
+      ],
+      "note": "no bank credit in the statement window"
+    },
+    {
+      "settlement_id": "set_0025",
+      "case_type": "MISSING_BANK_CREDIT",
+      "payment_ids": [
+        "pay_0137",
+        "pay_0138",
+        "pay_0139",
+        "pay_0140",
+        "pay_0141",
+        "pay_0142"
+      ],
+      "note": "no bank credit in the statement window"
+    }
+  ],
+  "unmatched_bank_txns": [
+    {
+      "bank_txn_id": "bnk_0017",
+      "case_type": "ORPHAN_CREDIT",
+      "note": "direct customer transfer, no settlement behind it"
+    },
+    {
+      "bank_txn_id": "bnk_0031",
+      "case_type": "ORPHAN_CREDIT",
+      "note": "direct customer transfer, no settlement behind it"
+    }
+  ],
+  "bank_reversal_pairs": [
+    [
+      "bnk_0012",
+      "bnk_0013"
+    ],
+    [
+      "bnk_0027",
+      "bnk_0028"
+    ]
+  ],
+  "loop_b": [
+    {
+      "case_type": "TDS_SHORT_PAYMENT",
+      "order_id": "ord_0019",
+      "payment_id": "pay_0019",
+      "withheld": 53046
+    },
+    {
+      "case_type": "TDS_SHORT_PAYMENT",
+      "order_id": "ord_0027",
+      "payment_id": "pay_0027",
+      "withheld": 161624
+    },
+    {
+      "case_type": "SHORT_PAYMENT",
+      "order_id": "ord_0033",
+      "payment_id": "pay_0033",
+      "withheld": 1987
+    }
+  ]
+}

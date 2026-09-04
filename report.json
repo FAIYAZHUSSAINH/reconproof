@@ -1,0 +1,2925 @@
+{
+  "run": {
+    "seed": 42,
+    "difficulty": "standard",
+    "generated_at": "2026-09-04T12:58:19+00:00",
+    "python": "3.12.10",
+    "platform": "Windows",
+    "argv": "C:\\Users\\ASUS\\Desktop\\Razorpay\\reconproof\\src\\reconproof\\run.py --no-llm --seed 42 --quiet",
+    "tampered_record": null,
+    "abstain_below": 0.75,
+    "tolerance_paise": 0,
+    "llm": false
+  },
+  "totals": {
+    "orders": 151,
+    "payments": 151,
+    "refunds": 2,
+    "adjustments": 4,
+    "settlements": 27,
+    "bank_txns": 31,
+    "records": 366,
+    "wall_clock_seconds": 0.012,
+    "records_per_second": 29763.4
+  },
+  "metrics": {
+    "auto_match_rate_records": 0.6667,
+    "matched_credits": 18,
+    "live_credits": 27,
+    "settlement_closure_rate": 0.6667,
+    "settlements_closed": 18,
+    "settlements_total": 27,
+    "value_coverage": 0.6976,
+    "value_matched_paise": 124928765,
+    "value_total_paise": 179094593,
+    "false_match_rate": 0.0,
+    "false_matches": 0,
+    "false_match_ids": [],
+    "accepted_matches": 16,
+    "exceptions": 12,
+    "exception_value_at_stake_paise": 29822305,
+    "exception_coverage": 1.0,
+    "bank_reversal_pairs": 2,
+    "subset_cap_hits": 0,
+    "candidates_generated": 26,
+    "proofs_verified": 26,
+    "proofs_passed": 20,
+    "proofs_failed": 6,
+    "labelled_units": 30,
+    "unmatched_units": 12,
+    "correct_diagnoses": 12,
+    "diagnosis_accuracy": 1.0,
+    "handled_correctly": 30,
+    "handled_rate": 1.0
+  },
+  "by_case_type": {
+    "AMOUNT_COLLISION": {
+      "units": 2,
+      "matched": 0,
+      "exceptions": 2,
+      "correctly_diagnosed": 2,
+      "expected_outcome": "match",
+      "match_rate": 0.0,
+      "diagnosis_rate": 1.0,
+      "handled_correctly": 2,
+      "handled_rate": 1.0
+    },
+    "CHARGEBACK_DEDUCTION": {
+      "units": 2,
+      "matched": 2,
+      "exceptions": 0,
+      "correctly_diagnosed": 0,
+      "expected_outcome": "match",
+      "match_rate": 1.0,
+      "diagnosis_rate": 0.0,
+      "handled_correctly": 2,
+      "handled_rate": 1.0
+    },
+    "CLEAN": {
+      "units": 5,
+      "matched": 5,
+      "exceptions": 0,
+      "correctly_diagnosed": 0,
+      "expected_outcome": "match",
+      "match_rate": 1.0,
+      "diagnosis_rate": 0.0,
+      "handled_correctly": 5,
+      "handled_rate": 1.0
+    },
+    "DUPLICATE_UTR": {
+      "units": 2,
+      "matched": 2,
+      "exceptions": 0,
+      "correctly_diagnosed": 0,
+      "expected_outcome": "match",
+      "match_rate": 1.0,
+      "diagnosis_rate": 0.0,
+      "handled_correctly": 2,
+      "handled_rate": 1.0
+    },
+    "MERGED_CREDIT": {
+      "units": 2,
+      "matched": 2,
+      "exceptions": 0,
+      "correctly_diagnosed": 0,
+      "expected_outcome": "match",
+      "match_rate": 1.0,
+      "diagnosis_rate": 0.0,
+      "handled_correctly": 2,
+      "handled_rate": 1.0
+    },
+    "MISSING_BANK_CREDIT": {
+      "units": 2,
+      "matched": 0,
+      "exceptions": 2,
+      "correctly_diagnosed": 2,
+      "expected_outcome": "exception",
+      "match_rate": 0.0,
+      "diagnosis_rate": 1.0,
+      "handled_correctly": 2,
+      "handled_rate": 1.0
+    },
+    "NARRATION_NOISE": {
+      "units": 2,
+      "matched": 2,
+      "exceptions": 0,
+      "correctly_diagnosed": 0,
+      "expected_outcome": "match",
+      "match_rate": 1.0,
+      "diagnosis_rate": 0.0,
+      "handled_correctly": 2,
+      "handled_rate": 1.0
+    },
+    "ORPHAN_CREDIT": {
+      "units": 2,
+      "matched": 0,
+      "exceptions": 2,
+      "correctly_diagnosed": 2,
+      "expected_outcome": "exception",
+      "match_rate": 0.0,
+      "diagnosis_rate": 1.0,
+      "handled_correctly": 2,
+      "handled_rate": 1.0
+    },
+    "ROUNDING_DRIFT": {
+      "units": 2,
+      "matched": 0,
+      "exceptions": 2,
+      "correctly_diagnosed": 2,
+      "expected_outcome": "match",
+      "match_rate": 0.0,
+      "diagnosis_rate": 1.0,
+      "handled_correctly": 2,
+      "handled_rate": 1.0
+    },
+    "SHORT_PAYMENT": {
+      "units": 1,
+      "matched": 0,
+      "exceptions": 1,
+      "correctly_diagnosed": 1,
+      "expected_outcome": "exception",
+      "match_rate": 0.0,
+      "diagnosis_rate": 1.0,
+      "handled_correctly": 1,
+      "handled_rate": 1.0
+    },
+    "SPLIT_SETTLEMENT": {
+      "units": 2,
+      "matched": 2,
+      "exceptions": 0,
+      "correctly_diagnosed": 0,
+      "expected_outcome": "match",
+      "match_rate": 1.0,
+      "diagnosis_rate": 0.0,
+      "handled_correctly": 2,
+      "handled_rate": 1.0
+    },
+    "TDS_SHORT_PAYMENT": {
+      "units": 2,
+      "matched": 2,
+      "exceptions": 0,
+      "correctly_diagnosed": 0,
+      "expected_outcome": "match",
+      "match_rate": 1.0,
+      "diagnosis_rate": 0.0,
+      "handled_correctly": 2,
+      "handled_rate": 1.0
+    },
+    "UNLABELLED_REVERSAL": {
+      "units": 2,
+      "matched": 0,
+      "exceptions": 2,
+      "correctly_diagnosed": 2,
+      "expected_outcome": "match",
+      "match_rate": 0.0,
+      "diagnosis_rate": 1.0,
+      "handled_correctly": 2,
+      "handled_rate": 1.0
+    },
+    "WITH_REFUND": {
+      "units": 2,
+      "matched": 1,
+      "exceptions": 1,
+      "correctly_diagnosed": 1,
+      "expected_outcome": "match",
+      "match_rate": 0.5,
+      "diagnosis_rate": 1.0,
+      "handled_correctly": 2,
+      "handled_rate": 1.0
+    }
+  },
+  "calibration": [
+    {
+      "bucket": "0.50-0.70",
+      "proofs": 4,
+      "correct": 2,
+      "accuracy": 0.5,
+      "accepted": false
+    },
+    {
+      "bucket": "0.70-0.85",
+      "proofs": 3,
+      "correct": 3,
+      "accuracy": 1.0,
+      "accepted": true
+    },
+    {
+      "bucket": "0.85-0.95",
+      "proofs": 2,
+      "correct": 2,
+      "accuracy": 1.0,
+      "accepted": true
+    },
+    {
+      "bucket": "0.95-1.00",
+      "proofs": 11,
+      "correct": 11,
+      "accuracy": 1.0,
+      "accepted": true
+    }
+  ],
+  "exception_taxonomy": [
+    {
+      "reason_code": "MISSING_BANK_CREDIT",
+      "count": 2,
+      "at_stake_paise": 14240311
+    },
+    {
+      "reason_code": "AMBIGUOUS_MATCH",
+      "count": 2,
+      "at_stake_paise": 13157510
+    },
+    {
+      "reason_code": "SUSPECT_UNLABELLED_REVERSAL",
+      "count": 2,
+      "at_stake_paise": 1452012
+    },
+    {
+      "reason_code": "ORPHAN_CREDIT",
+      "count": 2,
+      "at_stake_paise": 708747
+    },
+    {
+      "reason_code": "SUSPECT_UNAPPLIED_REFUND",
+      "count": 1,
+      "at_stake_paise": 261736
+    },
+    {
+      "reason_code": "SHORT_PAYMENT",
+      "count": 1,
+      "at_stake_paise": 1987
+    },
+    {
+      "reason_code": "ROUNDING_DRIFT",
+      "count": 2,
+      "at_stake_paise": 2
+    }
+  ],
+  "llm": {
+    "enabled": false,
+    "proposed": 0,
+    "accepted_by_verifier": 0,
+    "rejected_by_verifier": 0,
+    "log": []
+  },
+  "loop_b": {
+    "orders_checked": 151,
+    "short_payments_found": 3,
+    "explained_as_tds": 2,
+    "unexplained": 1,
+    "overpayments": 0,
+    "findings": [
+      {
+        "order_id": "ord_0019",
+        "ordered_paise": 530464,
+        "paid_paise": 477418,
+        "shortfall_paise": 53046,
+        "verdict": "TDS_WITHHELD",
+        "note": "shortfall is exactly 10% of the order on a B2B invoice"
+      },
+      {
+        "order_id": "ord_0027",
+        "ordered_paise": 1616239,
+        "paid_paise": 1454615,
+        "shortfall_paise": 161624,
+        "verdict": "TDS_WITHHELD",
+        "note": "shortfall is exactly 10% of the order on a B2B invoice"
+      },
+      {
+        "order_id": "ord_0033",
+        "ordered_paise": 462794,
+        "paid_paise": 460807,
+        "shortfall_paise": 1987,
+        "verdict": "SHORT_PAYMENT",
+        "note": "shortfall does not match any withholding rate"
+      }
+    ]
+  },
+  "bank_reversal_pairs": [
+    [
+      "bnk_0012",
+      "bnk_0013"
+    ],
+    [
+      "bnk_0027",
+      "bnk_0028"
+    ]
+  ],
+  "subset_cap_hits": [],
+  "accepted_proof_ids": [
+    "prf_13982f199e",
+    "prf_3087d85115",
+    "prf_53b2fdd241",
+    "prf_5567889063",
+    "prf_72b9a78cae",
+    "prf_7b78fe591a",
+    "prf_831d0e0c6a",
+    "prf_883138f363",
+    "prf_b1a3846504",
+    "prf_b3b32ad115",
+    "prf_bd6fd0ee6f",
+    "prf_be79412be6",
+    "prf_cf8a028c0a",
+    "prf_e2d16a5b69",
+    "prf_e39725ebe4",
+    "prf_e4acaa90d2"
+  ],
+  "proofs": [
+    {
+      "proof_id": "prf_13982f199e",
+      "bank_txn_id": "bnk_0006",
+      "settlement_id": "set_0006",
+      "rule": "R1_UTR_EXACT",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 7864195,
+          "source_ids": [
+            "pay_0035",
+            "pay_0036",
+            "pay_0037",
+            "pay_0038",
+            "pay_0039",
+            "pay_0040",
+            "pay_0041"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 155191,
+          "source_ids": [
+            "pay_0035",
+            "pay_0036",
+            "pay_0037",
+            "pay_0038",
+            "pay_0039",
+            "pay_0040",
+            "pay_0041"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 27934,
+          "source_ids": [
+            "pay_0035",
+            "pay_0036",
+            "pay_0037",
+            "pay_0038",
+            "pay_0039",
+            "pay_0040",
+            "pay_0041"
+          ]
+        }
+      ],
+      "computed_net": 7681070,
+      "observed_credit": 7681070,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0035",
+          "pay_0036",
+          "pay_0037",
+          "pay_0038",
+          "pay_0039",
+          "pay_0040",
+          "pay_0041"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0006"
+        ],
+        "settlement_ids": [
+          "set_0006"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "utr",
+          "value": "HDFCN26225708011"
+        },
+        {
+          "check": "narration",
+          "value": "NEFT-CR-ICIC0001234-RAZORPAY SOFTW-XXXXXX-HDFCN26225708011 -REF/CMS/2026/523389/PYMT"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=7, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 7 payments, 0 refunds, 0 adjustments"
+        }
+      ],
+      "confidence": 0.99,
+      "verdict": "PASS",
+      "verdict_reason": null
+    },
+    {
+      "proof_id": "prf_14f4130006",
+      "bank_txn_id": "bnk_0019",
+      "settlement_id": "set_0017",
+      "rule": "R2_AMOUNT_DATE",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 6701750,
+          "source_ids": [
+            "pay_0095",
+            "pay_0096",
+            "pay_0097",
+            "pay_0098",
+            "pay_0099"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 104233,
+          "source_ids": [
+            "pay_0095",
+            "pay_0096",
+            "pay_0097",
+            "pay_0098",
+            "pay_0099"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 18762,
+          "source_ids": [
+            "pay_0095",
+            "pay_0096",
+            "pay_0097",
+            "pay_0098",
+            "pay_0099"
+          ]
+        }
+      ],
+      "computed_net": 6578755,
+      "observed_credit": 6578755,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0095",
+          "pay_0096",
+          "pay_0097",
+          "pay_0098",
+          "pay_0099"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0019"
+        ],
+        "settlement_ids": [
+          "set_0017"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "net",
+          "value": "6578755"
+        },
+        {
+          "check": "value_date_gap_days",
+          "value": "0"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=5, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 5 payments, 0 refunds, 0 adjustments"
+        },
+        {
+          "check": "competing_proofs",
+          "value": "prf_d6e1f6b5db, prf_f214e34240",
+          "note": "another proof balances against the same records"
+        }
+      ],
+      "confidence": 0.5,
+      "verdict": "PASS",
+      "verdict_reason": null
+    },
+    {
+      "proof_id": "prf_199c27b9ad",
+      "bank_txn_id": "bnk_0020",
+      "settlement_id": "set_0018",
+      "rule": "R1_UTR_EXACT",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 9841836,
+          "source_ids": [
+            "pay_0100",
+            "pay_0101",
+            "pay_0102",
+            "pay_0103",
+            "pay_0104",
+            "pay_0105",
+            "pay_0106"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 189938,
+          "source_ids": [
+            "pay_0100",
+            "pay_0101",
+            "pay_0102",
+            "pay_0103",
+            "pay_0104",
+            "pay_0105",
+            "pay_0106"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 34188,
+          "source_ids": [
+            "pay_0100",
+            "pay_0101",
+            "pay_0102",
+            "pay_0103",
+            "pay_0104",
+            "pay_0105",
+            "pay_0106"
+          ]
+        }
+      ],
+      "computed_net": 9617710,
+      "observed_credit": 9355974,
+      "residual": 261736,
+      "members": {
+        "payment_ids": [
+          "pay_0100",
+          "pay_0101",
+          "pay_0102",
+          "pay_0103",
+          "pay_0104",
+          "pay_0105",
+          "pay_0106"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0020"
+        ],
+        "settlement_ids": [
+          "set_0018"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "utr",
+          "value": "UTIBN26249125362"
+        },
+        {
+          "check": "narration",
+          "value": "NEFT-CR-ICIC0001234-RAZORPAY SOFTWARE PVT LTD-UTIBN26249125362-SETTLEMENT"
+        },
+        {
+          "check": "settlement_declared_net",
+          "value": "9355974",
+          "note": "gateway's declared net differs from the sum of its line items"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=7, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 7 payments, 0 refunds, 0 adjustments"
+        },
+        {
+          "check": "residual_suspects",
+          "value": "rfnd_0002"
+        }
+      ],
+      "confidence": 0.98,
+      "verdict": "FAIL",
+      "verdict_reason": "SUSPECT_UNAPPLIED_REFUND"
+    },
+    {
+      "proof_id": "prf_3087d85115",
+      "bank_txn_id": "bnk_0025",
+      "settlement_id": "set_0023",
+      "rule": "R1_UTR_EXACT",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 10444476,
+          "source_ids": [
+            "pay_0125",
+            "pay_0126",
+            "pay_0127",
+            "pay_0128",
+            "pay_0129",
+            "pay_0130"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 160118,
+          "source_ids": [
+            "pay_0125",
+            "pay_0126",
+            "pay_0127",
+            "pay_0128",
+            "pay_0129",
+            "pay_0130"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 28821,
+          "source_ids": [
+            "pay_0125",
+            "pay_0126",
+            "pay_0127",
+            "pay_0128",
+            "pay_0129",
+            "pay_0130"
+          ]
+        },
+        {
+          "label": "Chargeback deductions",
+          "sign": -1,
+          "amount": 974594,
+          "source_ids": [
+            "adj_0003"
+          ]
+        }
+      ],
+      "computed_net": 9280943,
+      "observed_credit": 9280943,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0125",
+          "pay_0126",
+          "pay_0127",
+          "pay_0128",
+          "pay_0129",
+          "pay_0130"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [
+          "adj_0003"
+        ],
+        "bank_txn_ids": [
+          "bnk_0025"
+        ],
+        "settlement_ids": [
+          "set_0023"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "utr",
+          "value": "UTIBN26259577596"
+        },
+        {
+          "check": "narration",
+          "value": "NEFT-CR-HDFC0000123-RAZORPAY SOFTWARE PVT LTD-UTIBN26259577596-SETTLEMENT"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=1, bank_txn=1, payment=6, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 6 payments, 0 refunds, 1 adjustments"
+        }
+      ],
+      "confidence": 0.99,
+      "verdict": "PASS",
+      "verdict_reason": null
+    },
+    {
+      "proof_id": "prf_53b2fdd241",
+      "bank_txn_id": "bnk_0005",
+      "settlement_id": "set_0005",
+      "rule": "R1_UTR_EXACT",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 5431758,
+          "source_ids": [
+            "pay_0029",
+            "pay_0030",
+            "pay_0031",
+            "pay_0032",
+            "pay_0033"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 105120,
+          "source_ids": [
+            "pay_0029",
+            "pay_0030",
+            "pay_0031",
+            "pay_0032",
+            "pay_0033"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 18921,
+          "source_ids": [
+            "pay_0029",
+            "pay_0030",
+            "pay_0031",
+            "pay_0032",
+            "pay_0033"
+          ]
+        }
+      ],
+      "computed_net": 5307717,
+      "observed_credit": 5307717,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0029",
+          "pay_0030",
+          "pay_0031",
+          "pay_0032",
+          "pay_0033"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0005"
+        ],
+        "settlement_ids": [
+          "set_0005"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "utr",
+          "value": "UTIBN26223485100"
+        },
+        {
+          "check": "narration",
+          "value": "NEFT-CR-ICIC0001234-RAZORPAY SOFTWARE PVT LTD-UTIBN26223485100-SETTLEMENT"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=5, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 5 payments, 0 refunds, 0 adjustments"
+        }
+      ],
+      "confidence": 0.99,
+      "verdict": "PASS",
+      "verdict_reason": null
+    },
+    {
+      "proof_id": "prf_5567889063",
+      "bank_txn_id": "bnk_0004",
+      "settlement_id": "set_0004",
+      "rule": "R1_UTR_EXACT",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 13692018,
+          "source_ids": [
+            "pay_0021",
+            "pay_0022",
+            "pay_0023",
+            "pay_0024",
+            "pay_0025",
+            "pay_0026",
+            "pay_0027"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 193969,
+          "source_ids": [
+            "pay_0021",
+            "pay_0022",
+            "pay_0023",
+            "pay_0024",
+            "pay_0025",
+            "pay_0026",
+            "pay_0027"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 34914,
+          "source_ids": [
+            "pay_0021",
+            "pay_0022",
+            "pay_0023",
+            "pay_0024",
+            "pay_0025",
+            "pay_0026",
+            "pay_0027"
+          ]
+        }
+      ],
+      "computed_net": 13463135,
+      "observed_credit": 13463135,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0021",
+          "pay_0022",
+          "pay_0023",
+          "pay_0024",
+          "pay_0025",
+          "pay_0026",
+          "pay_0027"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0004"
+        ],
+        "settlement_ids": [
+          "set_0004"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "utr",
+          "value": "ICICN26221007540"
+        },
+        {
+          "check": "narration",
+          "value": "NEFT-CR-HDFC0000123-RAZORPAY SOFTWARE PVT LTD-ICICN26221007540-SETTLEMENT"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=7, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 7 payments, 0 refunds, 0 adjustments"
+        }
+      ],
+      "confidence": 0.99,
+      "verdict": "PASS",
+      "verdict_reason": null
+    },
+    {
+      "proof_id": "prf_5a31b89a2b",
+      "bank_txn_id": "bnk_0023",
+      "settlement_id": "set_0020",
+      "rule": "R1_UTR_EXACT",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 5927193,
+          "source_ids": [
+            "pay_0112",
+            "pay_0113",
+            "pay_0114",
+            "pay_0115",
+            "pay_0116"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 80182,
+          "source_ids": [
+            "pay_0112",
+            "pay_0113",
+            "pay_0114",
+            "pay_0115",
+            "pay_0116"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 14432,
+          "source_ids": [
+            "pay_0112",
+            "pay_0113",
+            "pay_0114",
+            "pay_0115",
+            "pay_0116"
+          ]
+        }
+      ],
+      "computed_net": 5832579,
+      "observed_credit": 10879106,
+      "residual": -5046527,
+      "members": {
+        "payment_ids": [
+          "pay_0112",
+          "pay_0113",
+          "pay_0114",
+          "pay_0115",
+          "pay_0116"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0023"
+        ],
+        "settlement_ids": [
+          "set_0020"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "utr",
+          "value": "UTIBN26253524783"
+        },
+        {
+          "check": "narration",
+          "value": "NEFT-CR-HDFC0000123-RAZORPAY SOFTWARE PVT LTD-UTIBN26253524783-SETTLEMENT"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=5, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 5 payments, 0 refunds, 0 adjustments"
+        }
+      ],
+      "confidence": 0.98,
+      "verdict": "FAIL",
+      "verdict_reason": "UNEXPLAINED_RESIDUAL"
+    },
+    {
+      "proof_id": "prf_60b04ebab4",
+      "bank_txn_id": "bnk_0011",
+      "settlement_id": "set_0010",
+      "rule": "R1_UTR_EXACT",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 7398170,
+          "source_ids": [
+            "pay_0056",
+            "pay_0057",
+            "pay_0058",
+            "pay_0059",
+            "pay_0060",
+            "pay_0061"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 133114,
+          "source_ids": [
+            "pay_0056",
+            "pay_0057",
+            "pay_0058",
+            "pay_0059",
+            "pay_0060",
+            "pay_0061"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 23960,
+          "source_ids": [
+            "pay_0056",
+            "pay_0057",
+            "pay_0058",
+            "pay_0059",
+            "pay_0060",
+            "pay_0061"
+          ]
+        }
+      ],
+      "computed_net": 7241096,
+      "observed_credit": 7241095,
+      "residual": 1,
+      "members": {
+        "payment_ids": [
+          "pay_0056",
+          "pay_0057",
+          "pay_0058",
+          "pay_0059",
+          "pay_0060",
+          "pay_0061"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0011"
+        ],
+        "settlement_ids": [
+          "set_0010"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "utr",
+          "value": "UTIBN26233457592"
+        },
+        {
+          "check": "narration",
+          "value": "NEFT-CR-HDFC0000123-RAZORPAY SOFTWARE PVT LTD-UTIBN26233457592-SETTLEMENT"
+        },
+        {
+          "check": "settlement_declared_net",
+          "value": "7241095",
+          "note": "gateway's declared net differs from the sum of its line items"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=6, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 6 payments, 0 refunds, 0 adjustments"
+        }
+      ],
+      "confidence": 0.98,
+      "verdict": "FAIL",
+      "verdict_reason": "ROUNDING_DRIFT"
+    },
+    {
+      "proof_id": "prf_623059247c",
+      "bank_txn_id": "bnk_0030",
+      "settlement_id": "set_0027",
+      "rule": "R1_UTR_EXACT",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 7116271,
+          "source_ids": [
+            "pay_0147",
+            "pay_0148",
+            "pay_0149",
+            "pay_0150",
+            "pay_0151"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 105857,
+          "source_ids": [
+            "pay_0147",
+            "pay_0148",
+            "pay_0149",
+            "pay_0150",
+            "pay_0151"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 19055,
+          "source_ids": [
+            "pay_0147",
+            "pay_0148",
+            "pay_0149",
+            "pay_0150",
+            "pay_0151"
+          ]
+        }
+      ],
+      "computed_net": 6991359,
+      "observed_credit": 7965953,
+      "residual": -974594,
+      "members": {
+        "payment_ids": [
+          "pay_0147",
+          "pay_0148",
+          "pay_0149",
+          "pay_0150",
+          "pay_0151"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0030"
+        ],
+        "settlement_ids": [
+          "set_0027"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "utr",
+          "value": "HDFCN26267248728"
+        },
+        {
+          "check": "narration",
+          "value": "NEFT-CR-KKBK0004321-RAZORPAY SOFTWARE PVT LTD-HDFCN26267248728-SETTLEMENT"
+        },
+        {
+          "check": "settlement_declared_net",
+          "value": "7965953",
+          "note": "gateway's declared net differs from the sum of its line items"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=5, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 5 payments, 0 refunds, 0 adjustments"
+        },
+        {
+          "check": "residual_suspects",
+          "value": "adj_0003, adj_0004"
+        }
+      ],
+      "confidence": 0.98,
+      "verdict": "FAIL",
+      "verdict_reason": "SUSPECT_UNLABELLED_REVERSAL"
+    },
+    {
+      "proof_id": "prf_6660ab0d5b",
+      "bank_txn_id": "bnk_0015",
+      "settlement_id": "set_0013",
+      "rule": "R1_UTR_EXACT",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 11014124,
+          "source_ids": [
+            "pay_0071",
+            "pay_0072",
+            "pay_0073",
+            "pay_0074",
+            "pay_0075",
+            "pay_0076",
+            "pay_0077"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 185327,
+          "source_ids": [
+            "pay_0071",
+            "pay_0072",
+            "pay_0073",
+            "pay_0074",
+            "pay_0075",
+            "pay_0076",
+            "pay_0077"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 33360,
+          "source_ids": [
+            "pay_0071",
+            "pay_0072",
+            "pay_0073",
+            "pay_0074",
+            "pay_0075",
+            "pay_0076",
+            "pay_0077"
+          ]
+        }
+      ],
+      "computed_net": 10795437,
+      "observed_credit": 11272855,
+      "residual": -477418,
+      "members": {
+        "payment_ids": [
+          "pay_0071",
+          "pay_0072",
+          "pay_0073",
+          "pay_0074",
+          "pay_0075",
+          "pay_0076",
+          "pay_0077"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0015"
+        ],
+        "settlement_ids": [
+          "set_0013"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "utr",
+          "value": "UTIBN26239936406"
+        },
+        {
+          "check": "narration",
+          "value": "NEFT-CR-HDFC0000123-RAZORPAY SOFTWARE PVT LTD-UTIBN26239936406-SETTLEMENT"
+        },
+        {
+          "check": "settlement_declared_net",
+          "value": "11272855",
+          "note": "gateway's declared net differs from the sum of its line items"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=7, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 7 payments, 0 refunds, 0 adjustments"
+        },
+        {
+          "check": "residual_suspects",
+          "value": "adj_0001, adj_0002"
+        }
+      ],
+      "confidence": 0.98,
+      "verdict": "FAIL",
+      "verdict_reason": "SUSPECT_UNLABELLED_REVERSAL"
+    },
+    {
+      "proof_id": "prf_72b9a78cae",
+      "bank_txn_id": "bnk_0003",
+      "settlement_id": "set_0003",
+      "rule": "R1_UTR_EXACT",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 9281317,
+          "source_ids": [
+            "pay_0013",
+            "pay_0014",
+            "pay_0015",
+            "pay_0016",
+            "pay_0017",
+            "pay_0018",
+            "pay_0019"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 113622,
+          "source_ids": [
+            "pay_0013",
+            "pay_0014",
+            "pay_0015",
+            "pay_0016",
+            "pay_0017",
+            "pay_0018",
+            "pay_0019"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 20452,
+          "source_ids": [
+            "pay_0013",
+            "pay_0014",
+            "pay_0015",
+            "pay_0016",
+            "pay_0017",
+            "pay_0018",
+            "pay_0019"
+          ]
+        }
+      ],
+      "computed_net": 9147243,
+      "observed_credit": 9147243,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0013",
+          "pay_0014",
+          "pay_0015",
+          "pay_0016",
+          "pay_0017",
+          "pay_0018",
+          "pay_0019"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0003"
+        ],
+        "settlement_ids": [
+          "set_0003"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "utr",
+          "value": "ICICN26219532342"
+        },
+        {
+          "check": "narration",
+          "value": "NEFT-CR-HDFC0000123-RAZORPAY SOFTWARE PVT LTD-ICICN26219532342-SETTLEMENT"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=7, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 7 payments, 0 refunds, 0 adjustments"
+        }
+      ],
+      "confidence": 0.99,
+      "verdict": "PASS",
+      "verdict_reason": null
+    },
+    {
+      "proof_id": "prf_7b78fe591a",
+      "bank_txn_id": "bnk_0009",
+      "settlement_id": "set_0009",
+      "rule": "R1_UTR_EXACT",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 3945317,
+          "source_ids": [
+            "pay_0052",
+            "pay_0053",
+            "pay_0054",
+            "pay_0055"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 38577,
+          "source_ids": [
+            "pay_0052",
+            "pay_0053",
+            "pay_0054",
+            "pay_0055"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 6943,
+          "source_ids": [
+            "pay_0052",
+            "pay_0053",
+            "pay_0054",
+            "pay_0055"
+          ]
+        }
+      ],
+      "computed_net": 3899797,
+      "observed_credit": 3899797,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0052",
+          "pay_0053",
+          "pay_0054",
+          "pay_0055"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0009",
+          "bnk_0010"
+        ],
+        "settlement_ids": [
+          "set_0009"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "utr",
+          "value": "ICICN26231924231"
+        },
+        {
+          "check": "narration",
+          "value": "NEFT-CR-KKBK0004321-RAZORPAY SOFTWARE PVT LTD-ICICN26231924231-SETTLEMENT"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=2, payment=4, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 4 payments, 0 refunds, 0 adjustments"
+        }
+      ],
+      "confidence": 0.99,
+      "verdict": "PASS",
+      "verdict_reason": null
+    },
+    {
+      "proof_id": "prf_831d0e0c6a",
+      "bank_txn_id": "bnk_0016",
+      "settlement_id": "set_0014",
+      "rule": "R4_MERGE",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 18886163,
+          "source_ids": [
+            "pay_0078",
+            "pay_0079",
+            "pay_0080",
+            "pay_0081",
+            "pay_0082",
+            "pay_0083",
+            "pay_0084",
+            "pay_0085",
+            "pay_0086",
+            "pay_0087",
+            "pay_0088",
+            "pay_0089"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 312016,
+          "source_ids": [
+            "pay_0078",
+            "pay_0079",
+            "pay_0080",
+            "pay_0081",
+            "pay_0082",
+            "pay_0083",
+            "pay_0084",
+            "pay_0085",
+            "pay_0086",
+            "pay_0087",
+            "pay_0088",
+            "pay_0089"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 56162,
+          "source_ids": [
+            "pay_0078",
+            "pay_0079",
+            "pay_0080",
+            "pay_0081",
+            "pay_0082",
+            "pay_0083",
+            "pay_0084",
+            "pay_0085",
+            "pay_0086",
+            "pay_0087",
+            "pay_0088",
+            "pay_0089"
+          ]
+        }
+      ],
+      "computed_net": 18517985,
+      "observed_credit": 18517985,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0078",
+          "pay_0079",
+          "pay_0080",
+          "pay_0081",
+          "pay_0082",
+          "pay_0083",
+          "pay_0084",
+          "pay_0085",
+          "pay_0086",
+          "pay_0087",
+          "pay_0088",
+          "pay_0089"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0016"
+        ],
+        "settlement_ids": [
+          "set_0014",
+          "set_0015"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "settlements_merged",
+          "value": "2"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=12, refund=0, settlement=2"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 12 payments, 0 refunds, 0 adjustments"
+        }
+      ],
+      "confidence": 0.78,
+      "verdict": "PASS",
+      "verdict_reason": null
+    },
+    {
+      "proof_id": "prf_883138f363",
+      "bank_txn_id": "bnk_0023",
+      "settlement_id": "set_0020",
+      "rule": "R4_MERGE",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 11089457,
+          "source_ids": [
+            "pay_0112",
+            "pay_0113",
+            "pay_0114",
+            "pay_0115",
+            "pay_0116",
+            "pay_0117",
+            "pay_0118",
+            "pay_0119",
+            "pay_0120"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 178265,
+          "source_ids": [
+            "pay_0112",
+            "pay_0113",
+            "pay_0114",
+            "pay_0115",
+            "pay_0116",
+            "pay_0117",
+            "pay_0118",
+            "pay_0119",
+            "pay_0120"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 32086,
+          "source_ids": [
+            "pay_0112",
+            "pay_0113",
+            "pay_0114",
+            "pay_0115",
+            "pay_0116",
+            "pay_0117",
+            "pay_0118",
+            "pay_0119",
+            "pay_0120"
+          ]
+        }
+      ],
+      "computed_net": 10879106,
+      "observed_credit": 10879106,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0112",
+          "pay_0113",
+          "pay_0114",
+          "pay_0115",
+          "pay_0116",
+          "pay_0117",
+          "pay_0118",
+          "pay_0119",
+          "pay_0120"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0023"
+        ],
+        "settlement_ids": [
+          "set_0020",
+          "set_0021"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "settlements_merged",
+          "value": "2"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=9, refund=0, settlement=2"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 9 payments, 0 refunds, 0 adjustments"
+        }
+      ],
+      "confidence": 0.78,
+      "verdict": "PASS",
+      "verdict_reason": null
+    },
+    {
+      "proof_id": "prf_b1a3846504",
+      "bank_txn_id": "bnk_0007",
+      "settlement_id": "set_0007",
+      "rule": "R1_UTR_EXACT",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 7681415,
+          "source_ids": [
+            "pay_0042",
+            "pay_0043",
+            "pay_0044",
+            "pay_0045"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 123652,
+          "source_ids": [
+            "pay_0042",
+            "pay_0043",
+            "pay_0044",
+            "pay_0045"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 22257,
+          "source_ids": [
+            "pay_0042",
+            "pay_0043",
+            "pay_0044",
+            "pay_0045"
+          ]
+        },
+        {
+          "label": "Refunds",
+          "sign": -1,
+          "amount": 243508,
+          "source_ids": [
+            "rfnd_0001"
+          ]
+        }
+      ],
+      "computed_net": 7291998,
+      "observed_credit": 7291998,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0042",
+          "pay_0043",
+          "pay_0044",
+          "pay_0045"
+        ],
+        "refund_ids": [
+          "rfnd_0001"
+        ],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0007"
+        ],
+        "settlement_ids": [
+          "set_0007"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "utr",
+          "value": "UTIBN26227923653"
+        },
+        {
+          "check": "narration",
+          "value": "NEFT-CR-HDFC0000123-RAZORPAY SOFTWARE PVT LTD-UTIBN26227923653-SETTLEMENT"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=4, refund=1, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 4 payments, 1 refunds, 0 adjustments"
+        }
+      ],
+      "confidence": 0.99,
+      "verdict": "PASS",
+      "verdict_reason": null
+    },
+    {
+      "proof_id": "prf_b3b32ad115",
+      "bank_txn_id": "bnk_0001",
+      "settlement_id": "set_0001",
+      "rule": "R1_UTR_EXACT",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 4492779,
+          "source_ids": [
+            "pay_0001",
+            "pay_0002",
+            "pay_0003",
+            "pay_0004"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 74712,
+          "source_ids": [
+            "pay_0001",
+            "pay_0002",
+            "pay_0003",
+            "pay_0004"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 13448,
+          "source_ids": [
+            "pay_0001",
+            "pay_0002",
+            "pay_0003",
+            "pay_0004"
+          ]
+        }
+      ],
+      "computed_net": 4404619,
+      "observed_credit": 4404619,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0001",
+          "pay_0002",
+          "pay_0003",
+          "pay_0004"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0001"
+        ],
+        "settlement_ids": [
+          "set_0001"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "utr",
+          "value": "HDFCN26215398382"
+        },
+        {
+          "check": "narration",
+          "value": "NEFT-CR-HDFC0000123-RAZORPAY SOFTWARE PVT LTD-HDFCN26215398382-SETTLEMENT"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=4, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 4 payments, 0 refunds, 0 adjustments"
+        }
+      ],
+      "confidence": 0.99,
+      "verdict": "PASS",
+      "verdict_reason": null
+    },
+    {
+      "proof_id": "prf_bd6fd0ee6f",
+      "bank_txn_id": "bnk_0008",
+      "settlement_id": "set_0008",
+      "rule": "R1_UTR_EXACT",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 8888715,
+          "source_ids": [
+            "pay_0046",
+            "pay_0047",
+            "pay_0048",
+            "pay_0049",
+            "pay_0050",
+            "pay_0051"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 147279,
+          "source_ids": [
+            "pay_0046",
+            "pay_0047",
+            "pay_0048",
+            "pay_0049",
+            "pay_0050",
+            "pay_0051"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 26510,
+          "source_ids": [
+            "pay_0046",
+            "pay_0047",
+            "pay_0048",
+            "pay_0049",
+            "pay_0050",
+            "pay_0051"
+          ]
+        },
+        {
+          "label": "Chargeback deductions",
+          "sign": -1,
+          "amount": 477418,
+          "source_ids": [
+            "adj_0001"
+          ]
+        }
+      ],
+      "computed_net": 8237508,
+      "observed_credit": 8237508,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0046",
+          "pay_0047",
+          "pay_0048",
+          "pay_0049",
+          "pay_0050",
+          "pay_0051"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [
+          "adj_0001"
+        ],
+        "bank_txn_ids": [
+          "bnk_0008"
+        ],
+        "settlement_ids": [
+          "set_0008"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "utr",
+          "value": "KKBKN26229588153"
+        },
+        {
+          "check": "narration",
+          "value": "NEFT-CR-HDFC0000123-RAZORPAY SOFTWARE PVT LTD-KKBKN26229588153-SETTLEMENT"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=1, bank_txn=1, payment=6, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 6 payments, 0 refunds, 1 adjustments"
+        }
+      ],
+      "confidence": 0.99,
+      "verdict": "PASS",
+      "verdict_reason": null
+    },
+    {
+      "proof_id": "prf_be79412be6",
+      "bank_txn_id": "bnk_0024",
+      "settlement_id": "set_0022",
+      "rule": "R1_UTR_EXACT",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 3902200,
+          "source_ids": [
+            "pay_0121",
+            "pay_0122",
+            "pay_0123",
+            "pay_0124"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 33842,
+          "source_ids": [
+            "pay_0121",
+            "pay_0122",
+            "pay_0123",
+            "pay_0124"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 6092,
+          "source_ids": [
+            "pay_0121",
+            "pay_0122",
+            "pay_0123",
+            "pay_0124"
+          ]
+        }
+      ],
+      "computed_net": 3862266,
+      "observed_credit": 3862266,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0121",
+          "pay_0122",
+          "pay_0123",
+          "pay_0124"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0024"
+        ],
+        "settlement_ids": [
+          "set_0022"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "utr",
+          "value": "KKBKN26257364863"
+        },
+        {
+          "check": "narration",
+          "value": "NEFT-CR-KKBK0004321-RAZORPAY SOFTW-XXXXXX-KKBKN26257364863 -REF/CMS/2026/449499/PYMT"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=4, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 4 payments, 0 refunds, 0 adjustments"
+        }
+      ],
+      "confidence": 0.99,
+      "verdict": "PASS",
+      "verdict_reason": null
+    },
+    {
+      "proof_id": "prf_cf8a028c0a",
+      "bank_txn_id": "bnk_0002",
+      "settlement_id": "set_0002",
+      "rule": "R1_UTR_EXACT",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 7993282,
+          "source_ids": [
+            "pay_0006",
+            "pay_0007",
+            "pay_0008",
+            "pay_0009",
+            "pay_0010",
+            "pay_0011"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 141241,
+          "source_ids": [
+            "pay_0006",
+            "pay_0007",
+            "pay_0008",
+            "pay_0009",
+            "pay_0010",
+            "pay_0011"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 25422,
+          "source_ids": [
+            "pay_0006",
+            "pay_0007",
+            "pay_0008",
+            "pay_0009",
+            "pay_0010",
+            "pay_0011"
+          ]
+        }
+      ],
+      "computed_net": 7826619,
+      "observed_credit": 7826619,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0006",
+          "pay_0007",
+          "pay_0008",
+          "pay_0009",
+          "pay_0010",
+          "pay_0011"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0002"
+        ],
+        "settlement_ids": [
+          "set_0002"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "utr",
+          "value": "UTIBN26217069403"
+        },
+        {
+          "check": "narration",
+          "value": "NEFT-CR-ICIC0001234-RAZORPAY SOFTWARE PVT LTD-UTIBN26217069403-SETTLEMENT"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=6, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 6 payments, 0 refunds, 0 adjustments"
+        }
+      ],
+      "confidence": 0.99,
+      "verdict": "PASS",
+      "verdict_reason": null
+    },
+    {
+      "proof_id": "prf_d68c920856",
+      "bank_txn_id": "bnk_0026",
+      "settlement_id": "set_0024",
+      "rule": "R1_UTR_EXACT",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 4560986,
+          "source_ids": [
+            "pay_0131",
+            "pay_0132",
+            "pay_0133",
+            "pay_0134",
+            "pay_0135",
+            "pay_0136"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 82451,
+          "source_ids": [
+            "pay_0131",
+            "pay_0132",
+            "pay_0133",
+            "pay_0134",
+            "pay_0135",
+            "pay_0136"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 14842,
+          "source_ids": [
+            "pay_0131",
+            "pay_0132",
+            "pay_0133",
+            "pay_0134",
+            "pay_0135",
+            "pay_0136"
+          ]
+        }
+      ],
+      "computed_net": 4463693,
+      "observed_credit": 4463694,
+      "residual": -1,
+      "members": {
+        "payment_ids": [
+          "pay_0131",
+          "pay_0132",
+          "pay_0133",
+          "pay_0134",
+          "pay_0135",
+          "pay_0136"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0026"
+        ],
+        "settlement_ids": [
+          "set_0024"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "utr",
+          "value": "KKBKN26261564742"
+        },
+        {
+          "check": "narration",
+          "value": "NEFT-CR-KKBK0004321-RAZORPAY SOFTWARE PVT LTD-KKBKN26261564742-SETTLEMENT"
+        },
+        {
+          "check": "settlement_declared_net",
+          "value": "4463694",
+          "note": "gateway's declared net differs from the sum of its line items"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=6, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 6 payments, 0 refunds, 0 adjustments"
+        }
+      ],
+      "confidence": 0.98,
+      "verdict": "FAIL",
+      "verdict_reason": "ROUNDING_DRIFT"
+    },
+    {
+      "proof_id": "prf_d6e1f6b5db",
+      "bank_txn_id": "bnk_0018",
+      "settlement_id": "set_0017",
+      "rule": "R2_AMOUNT_DATE",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 6701750,
+          "source_ids": [
+            "pay_0095",
+            "pay_0096",
+            "pay_0097",
+            "pay_0098",
+            "pay_0099"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 104233,
+          "source_ids": [
+            "pay_0095",
+            "pay_0096",
+            "pay_0097",
+            "pay_0098",
+            "pay_0099"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 18762,
+          "source_ids": [
+            "pay_0095",
+            "pay_0096",
+            "pay_0097",
+            "pay_0098",
+            "pay_0099"
+          ]
+        }
+      ],
+      "computed_net": 6578755,
+      "observed_credit": 6578755,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0095",
+          "pay_0096",
+          "pay_0097",
+          "pay_0098",
+          "pay_0099"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0018"
+        ],
+        "settlement_ids": [
+          "set_0017"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "net",
+          "value": "6578755"
+        },
+        {
+          "check": "value_date_gap_days",
+          "value": "0"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=5, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 5 payments, 0 refunds, 0 adjustments"
+        },
+        {
+          "check": "competing_proofs",
+          "value": "prf_14f4130006, prf_f0eddb6c11",
+          "note": "another proof balances against the same records"
+        }
+      ],
+      "confidence": 0.5,
+      "verdict": "PASS",
+      "verdict_reason": null
+    },
+    {
+      "proof_id": "prf_e2d16a5b69",
+      "bank_txn_id": "bnk_0029",
+      "settlement_id": "set_0026",
+      "rule": "R2_AMOUNT_DATE",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 2805536,
+          "source_ids": [
+            "pay_0143",
+            "pay_0144",
+            "pay_0145",
+            "pay_0146"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 27164,
+          "source_ids": [
+            "pay_0143",
+            "pay_0144",
+            "pay_0145",
+            "pay_0146"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 4890,
+          "source_ids": [
+            "pay_0143",
+            "pay_0144",
+            "pay_0145",
+            "pay_0146"
+          ]
+        }
+      ],
+      "computed_net": 2773482,
+      "observed_credit": 2773482,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0143",
+          "pay_0144",
+          "pay_0145",
+          "pay_0146"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0029"
+        ],
+        "settlement_ids": [
+          "set_0026"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "net",
+          "value": "2773482"
+        },
+        {
+          "check": "value_date_gap_days",
+          "value": "1"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=4, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 4 payments, 0 refunds, 0 adjustments"
+        }
+      ],
+      "confidence": 0.87,
+      "verdict": "PASS",
+      "verdict_reason": null
+    },
+    {
+      "proof_id": "prf_e39725ebe4",
+      "bank_txn_id": "bnk_0021",
+      "settlement_id": "set_0019",
+      "rule": "R3_SPLIT",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 7960704,
+          "source_ids": [
+            "pay_0107",
+            "pay_0108",
+            "pay_0109",
+            "pay_0110",
+            "pay_0111"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 154656,
+          "source_ids": [
+            "pay_0107",
+            "pay_0108",
+            "pay_0109",
+            "pay_0110",
+            "pay_0111"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 27838,
+          "source_ids": [
+            "pay_0107",
+            "pay_0108",
+            "pay_0109",
+            "pay_0110",
+            "pay_0111"
+          ]
+        }
+      ],
+      "computed_net": 7778210,
+      "observed_credit": 7778210,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0107",
+          "pay_0108",
+          "pay_0109",
+          "pay_0110",
+          "pay_0111"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0021",
+          "bnk_0022"
+        ],
+        "settlement_ids": [
+          "set_0019"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "legs",
+          "value": "2"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=2, payment=5, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 5 payments, 0 refunds, 0 adjustments"
+        }
+      ],
+      "confidence": 0.78,
+      "verdict": "PASS",
+      "verdict_reason": null
+    },
+    {
+      "proof_id": "prf_e4acaa90d2",
+      "bank_txn_id": "bnk_0014",
+      "settlement_id": "set_0012",
+      "rule": "R2_AMOUNT_DATE",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 4668295,
+          "source_ids": [
+            "pay_0067",
+            "pay_0068",
+            "pay_0069",
+            "pay_0070"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 77312,
+          "source_ids": [
+            "pay_0067",
+            "pay_0068",
+            "pay_0069",
+            "pay_0070"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 13916,
+          "source_ids": [
+            "pay_0067",
+            "pay_0068",
+            "pay_0069",
+            "pay_0070"
+          ]
+        }
+      ],
+      "computed_net": 4577067,
+      "observed_credit": 4577067,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0067",
+          "pay_0068",
+          "pay_0069",
+          "pay_0070"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0014"
+        ],
+        "settlement_ids": [
+          "set_0012"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "net",
+          "value": "4577067"
+        },
+        {
+          "check": "value_date_gap_days",
+          "value": "1"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=4, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 4 payments, 0 refunds, 0 adjustments"
+        }
+      ],
+      "confidence": 0.87,
+      "verdict": "PASS",
+      "verdict_reason": null
+    },
+    {
+      "proof_id": "prf_f0eddb6c11",
+      "bank_txn_id": "bnk_0018",
+      "settlement_id": "set_0016",
+      "rule": "R2_AMOUNT_DATE",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 6701750,
+          "source_ids": [
+            "pay_0090",
+            "pay_0091",
+            "pay_0092",
+            "pay_0093",
+            "pay_0094"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 104233,
+          "source_ids": [
+            "pay_0090",
+            "pay_0091",
+            "pay_0092",
+            "pay_0093",
+            "pay_0094"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 18762,
+          "source_ids": [
+            "pay_0090",
+            "pay_0091",
+            "pay_0092",
+            "pay_0093",
+            "pay_0094"
+          ]
+        }
+      ],
+      "computed_net": 6578755,
+      "observed_credit": 6578755,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0090",
+          "pay_0091",
+          "pay_0092",
+          "pay_0093",
+          "pay_0094"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0018"
+        ],
+        "settlement_ids": [
+          "set_0016"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "net",
+          "value": "6578755"
+        },
+        {
+          "check": "value_date_gap_days",
+          "value": "2"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=5, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 5 payments, 0 refunds, 0 adjustments"
+        },
+        {
+          "check": "competing_proofs",
+          "value": "prf_d6e1f6b5db, prf_f214e34240",
+          "note": "another proof balances against the same records"
+        }
+      ],
+      "confidence": 0.5,
+      "verdict": "PASS",
+      "verdict_reason": null
+    },
+    {
+      "proof_id": "prf_f214e34240",
+      "bank_txn_id": "bnk_0019",
+      "settlement_id": "set_0016",
+      "rule": "R2_AMOUNT_DATE",
+      "terms": [
+        {
+          "label": "Gross payments",
+          "sign": 1,
+          "amount": 6701750,
+          "source_ids": [
+            "pay_0090",
+            "pay_0091",
+            "pay_0092",
+            "pay_0093",
+            "pay_0094"
+          ]
+        },
+        {
+          "label": "Gateway fee",
+          "sign": -1,
+          "amount": 104233,
+          "source_ids": [
+            "pay_0090",
+            "pay_0091",
+            "pay_0092",
+            "pay_0093",
+            "pay_0094"
+          ]
+        },
+        {
+          "label": "GST on fee",
+          "sign": -1,
+          "amount": 18762,
+          "source_ids": [
+            "pay_0090",
+            "pay_0091",
+            "pay_0092",
+            "pay_0093",
+            "pay_0094"
+          ]
+        }
+      ],
+      "computed_net": 6578755,
+      "observed_credit": 6578755,
+      "residual": 0,
+      "members": {
+        "payment_ids": [
+          "pay_0090",
+          "pay_0091",
+          "pay_0092",
+          "pay_0093",
+          "pay_0094"
+        ],
+        "refund_ids": [],
+        "adjustment_ids": [],
+        "bank_txn_ids": [
+          "bnk_0019"
+        ],
+        "settlement_ids": [
+          "set_0016"
+        ]
+      },
+      "evidence": [
+        {
+          "check": "net",
+          "value": "6578755"
+        },
+        {
+          "check": "value_date_gap_days",
+          "value": "2"
+        },
+        {
+          "check": "member_counts",
+          "value": "adjustment=0, bank_txn=1, payment=5, refund=0, settlement=1"
+        },
+        {
+          "check": "verifier",
+          "value": "recomputed from 5 payments, 0 refunds, 0 adjustments"
+        },
+        {
+          "check": "competing_proofs",
+          "value": "prf_14f4130006, prf_f0eddb6c11",
+          "note": "another proof balances against the same records"
+        }
+      ],
+      "confidence": 0.5,
+      "verdict": "PASS",
+      "verdict_reason": null
+    }
+  ],
+  "exceptions": [
+    {
+      "exception_id": "exc_set_002",
+      "reason_code": "MISSING_BANK_CREDIT",
+      "subject_kind": "settlement",
+      "subject_id": "set_0025",
+      "residual": 9033172,
+      "at_stake": 9033172,
+      "records_involved": [
+        "set_0025",
+        "pay_0137",
+        "pay_0138",
+        "pay_0139",
+        "pay_0140",
+        "pay_0141"
+      ],
+      "what_to_check": "The gateway settled set_0025 but no credit has landed. Expected ₹90,331.72 on or after the settlement date - chase the bank if it is more than one working day late.",
+      "confidence": null,
+      "proof_id": null,
+      "case_type": null
+    },
+    {
+      "exception_id": "exc_bnk_004",
+      "reason_code": "AMBIGUOUS_MATCH",
+      "subject_kind": "bank_txn",
+      "subject_id": "bnk_0018",
+      "residual": 0,
+      "at_stake": 6578755,
+      "records_involved": [
+        "bnk_0018",
+        "set_0016",
+        "set_0017"
+      ],
+      "what_to_check": "More than one settlement balances against this credit (set_0016, set_0017) and the narration carries no readable UTR. Ask the bank for the full reference; amount and date cannot separate these.",
+      "confidence": 0.5,
+      "proof_id": "prf_f0eddb6c11",
+      "case_type": null
+    },
+    {
+      "exception_id": "exc_bnk_005",
+      "reason_code": "AMBIGUOUS_MATCH",
+      "subject_kind": "bank_txn",
+      "subject_id": "bnk_0019",
+      "residual": 0,
+      "at_stake": 6578755,
+      "records_involved": [
+        "bnk_0019",
+        "set_0016",
+        "set_0017"
+      ],
+      "what_to_check": "More than one settlement balances against this credit (set_0016, set_0017) and the narration carries no readable UTR. Ask the bank for the full reference; amount and date cannot separate these.",
+      "confidence": 0.5,
+      "proof_id": "prf_f214e34240",
+      "case_type": null
+    },
+    {
+      "exception_id": "exc_set_001",
+      "reason_code": "MISSING_BANK_CREDIT",
+      "subject_kind": "settlement",
+      "subject_id": "set_0011",
+      "residual": 5207139,
+      "at_stake": 5207139,
+      "records_involved": [
+        "set_0011",
+        "pay_0062",
+        "pay_0063",
+        "pay_0064",
+        "pay_0065",
+        "pay_0066"
+      ],
+      "what_to_check": "The gateway settled set_0011 but no credit has landed. Expected ₹52,071.39 on or after the settlement date - chase the bank if it is more than one working day late.",
+      "confidence": null,
+      "proof_id": null,
+      "case_type": null
+    },
+    {
+      "exception_id": "exc_bnk_008",
+      "reason_code": "SUSPECT_UNLABELLED_REVERSAL",
+      "subject_kind": "bank_txn",
+      "subject_id": "bnk_0030",
+      "residual": -974594,
+      "at_stake": 974594,
+      "records_involved": [
+        "adj_0003",
+        "adj_0004",
+        "bnk_0030",
+        "set_0027"
+      ],
+      "what_to_check": "The residual equals adjustment adj_0003, adj_0004, which carries no payment reference. Check whether a won chargeback was credited back in this payout.",
+      "confidence": 0.98,
+      "proof_id": "prf_623059247c",
+      "case_type": null
+    },
+    {
+      "exception_id": "exc_bnk_002",
+      "reason_code": "SUSPECT_UNLABELLED_REVERSAL",
+      "subject_kind": "bank_txn",
+      "subject_id": "bnk_0015",
+      "residual": -477418,
+      "at_stake": 477418,
+      "records_involved": [
+        "adj_0001",
+        "adj_0002",
+        "bnk_0015",
+        "set_0013"
+      ],
+      "what_to_check": "The residual equals adjustment adj_0001, adj_0002, which carries no payment reference. Check whether a won chargeback was credited back in this payout.",
+      "confidence": 0.98,
+      "proof_id": "prf_6660ab0d5b",
+      "case_type": null
+    },
+    {
+      "exception_id": "exc_bnk_009",
+      "reason_code": "ORPHAN_CREDIT",
+      "subject_kind": "bank_txn",
+      "subject_id": "bnk_0031",
+      "residual": -476395,
+      "at_stake": 476395,
+      "records_involved": [
+        "bnk_0031"
+      ],
+      "what_to_check": "No settlement matches this credit and the narration carries no UTR. It looks like a direct transfer from a customer - check the receivables ledger, not the gateway.",
+      "confidence": null,
+      "proof_id": null,
+      "case_type": null
+    },
+    {
+      "exception_id": "exc_bnk_006",
+      "reason_code": "SUSPECT_UNAPPLIED_REFUND",
+      "subject_kind": "bank_txn",
+      "subject_id": "bnk_0020",
+      "residual": 261736,
+      "at_stake": 261736,
+      "records_involved": [
+        "bnk_0020",
+        "rfnd_0002",
+        "set_0018"
+      ],
+      "what_to_check": "The residual equals refund rfnd_0002 exactly. Check whether the gateway netted that refund off this payout while your books date it to an earlier cycle.",
+      "confidence": 0.98,
+      "proof_id": "prf_199c27b9ad",
+      "case_type": null
+    },
+    {
+      "exception_id": "exc_bnk_003",
+      "reason_code": "ORPHAN_CREDIT",
+      "subject_kind": "bank_txn",
+      "subject_id": "bnk_0017",
+      "residual": -232352,
+      "at_stake": 232352,
+      "records_involved": [
+        "bnk_0017"
+      ],
+      "what_to_check": "No settlement matches this credit and the narration carries no UTR. It looks like a direct transfer from a customer - check the receivables ledger, not the gateway.",
+      "confidence": null,
+      "proof_id": null,
+      "case_type": null
+    },
+    {
+      "exception_id": "exc_ord_001",
+      "reason_code": "SHORT_PAYMENT",
+      "subject_kind": "order",
+      "subject_id": "ord_0033",
+      "residual": 1987,
+      "at_stake": 1987,
+      "records_involved": [
+        "ord_0033",
+        "pay_0033"
+      ],
+      "what_to_check": "Order ord_0033 was paid short by ₹19.87 and is not a B2B invoice, so TDS does not explain it. Check for a partial payment or a failed retry.",
+      "confidence": null,
+      "proof_id": null,
+      "case_type": null
+    },
+    {
+      "exception_id": "exc_bnk_001",
+      "reason_code": "ROUNDING_DRIFT",
+      "subject_kind": "bank_txn",
+      "subject_id": "bnk_0011",
+      "residual": 1,
+      "at_stake": 1,
+      "records_involved": [
+        "bnk_0011",
+        "set_0010"
+      ],
+      "what_to_check": "Residual of ₹0.01. GST appears to have been rounded on the batch fee instead of per payment. Re-run with --tolerance-paise 5 to accept differences this size.",
+      "confidence": 0.98,
+      "proof_id": "prf_60b04ebab4",
+      "case_type": null
+    },
+    {
+      "exception_id": "exc_bnk_007",
+      "reason_code": "ROUNDING_DRIFT",
+      "subject_kind": "bank_txn",
+      "subject_id": "bnk_0026",
+      "residual": -1,
+      "at_stake": 1,
+      "records_involved": [
+        "bnk_0026",
+        "set_0024"
+      ],
+      "what_to_check": "Residual of ₹0.01. GST appears to have been rounded on the batch fee instead of per payment. Re-run with --tolerance-paise 5 to accept differences this size.",
+      "confidence": 0.98,
+      "proof_id": "prf_d68c920856",
+      "case_type": null
+    }
+  ]
+}
