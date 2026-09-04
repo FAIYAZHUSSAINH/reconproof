@@ -167,3 +167,67 @@ class TestLoopB:
         }
         filed = {e.subject_id for e in result.exceptions}
         assert not (tds_orders & filed)
+
+
+class TestAmbiguityIsNotResolvedByLuck:
+    """The AMOUNT_COLLISION pair, and why the competition cap is load-bearing.
+
+    Two settlements on the same date with identical nets produce four
+    candidate pairings, and *all four* balance to exactly zero paise. The
+    arithmetic cannot separate them, so neither can this system. Without the
+    0.50 cap the batch still reports zero false matches on this seed - but
+    only because the exclusivity tie-break happens to sort the correct
+    permutation first. Being right by ID order is not evidence, and this test
+    exists so that nobody later reads that zero as a result.
+    """
+
+    COLLIDING = {"bnk_0018", "bnk_0019"}
+
+    def _colliding_proofs(self, store):
+        from reconproof.proof import build_proof
+        from reconproof.verify import verify
+
+        return [
+            verify(build_proof(store, candidate), store)
+            for candidate in generate_candidates(store).candidates
+            if set(candidate.bank_txn_ids) & self.COLLIDING
+        ]
+
+    def test_every_permutation_balances(self, store):
+        proofs = self._colliding_proofs(store)
+        assert len(proofs) == 4
+        assert all(p.verdict == "PASS" and p.residual == 0 for p in proofs)
+
+    def test_half_of_the_permutations_are_wrong(self, store, truth):
+        """Proof that the choice is a coin flip, not a deduction."""
+        proofs = self._colliding_proofs(store)
+        assert sum(is_correct(p, truth) for p in proofs) == 2
+
+    def test_the_system_abstains_on_both(self, store):
+        result = run_pipeline(store)
+        matched = {
+            txn_id for proof in result.accepted for txn_id in proof.members["bank_txn_ids"]
+        }
+        assert not (self.COLLIDING & matched)
+
+        filed = {
+            exception.subject_id: exception.reason_code
+            for exception in result.exceptions
+        }
+        for txn_id in self.COLLIDING:
+            assert filed[txn_id] == "AMBIGUOUS_MATCH"
+
+    def test_the_cap_is_what_does_it(self, store):
+        """Drop the threshold and the system starts guessing.
+
+        It guesses correctly on this seed. That is the point: the cap is not
+        buying a lower false-match rate on this batch, it is buying the
+        system's refusal to answer a question the data cannot answer.
+        """
+        reckless = run_pipeline(store, abstain_below=0.0)
+        matched = {
+            txn_id for proof in reckless.accepted for txn_id in proof.members["bank_txn_ids"]
+        }
+        assert self.COLLIDING <= matched
+        guessed = [p for p in reckless.accepted if set(p.members["bank_txn_ids"]) & self.COLLIDING]
+        assert all(p.confidence == 0.50 for p in guessed)

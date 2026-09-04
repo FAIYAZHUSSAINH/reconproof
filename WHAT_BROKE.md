@@ -105,3 +105,39 @@ confidence in every figure I had quoted before running the check: the honest
 statement is not "the match rate is 66.7%", it is "the match rate is 66.7% and
 for several hours I was quoting 63.0% from a measurement I had broken myself
 and not noticed."
+
+---
+
+## 2026-09-04 — "Zero false matches" was hiding a coin flip
+
+**Symptom.** Writing up the cost of abstention, I wanted the line *"abstaining costs 7
+points of match rate and buys a false-match rate of zero."* So I measured it:
+`--abstain-below 0` gives 74.1% instead of 66.7% — and **zero false matches either
+way**. The sentence I was about to publish was not true.
+
+**Diagnosis.** The two extra credits at threshold 0 are the `AMOUNT_COLLISION` pair:
+two settlements on the same date with identical nets and no readable UTR. Building all
+four candidate pairings and verifying each one shows why the metric looked clean —
+**all four balance to exactly zero paise.** Two of them are wrong. With the 0.50
+competition cap removed, both proofs become eligible, member exclusivity has to break
+the tie, and it breaks it by sorting proof IDs. On this seed that ordering happens to
+select the correct permutation. The system guessed, got it right, and the false-match
+counter recorded a success.
+
+That is the exact failure the track brief warns about — *one cherry-picked match proves
+nothing* — arriving through the metric rather than through the demo. A different seed
+flips a coin and my headline number becomes a lie.
+
+**Fix.** No code change; the cap was already doing the right thing. What was missing was
+evidence, so `TestAmbiguityIsNotResolvedByLuck` now asserts all four permutations
+verify PASS, that exactly two of them are wrong, that the system abstains on both
+credits at the default threshold, and that at threshold 0 the accepted proofs carry a
+confidence of exactly 0.50. And `ARCHITECTURE.md` now states the trade-off as measured
+rather than as assumed.
+
+**The number that got worse.** The claim did. "Abstention buys a false-match rate of
+zero" became "abstention costs 7.4 points of match rate and buys nothing measurable on
+this batch — what it buys is the refusal to answer a question the data cannot answer."
+That is a weaker sentence and a true one. The honest version of the argument for
+abstaining is not that it improves a metric; it is that the metric could not have told
+me the difference.
