@@ -1,11 +1,8 @@
-# Core - Phase 1. Every dependency here is one I have to justify out loud.
+# Core. Everything needed to run the reconciler and the tests.
 pydantic==2.13.5      # record + proof schemas, strict int validation on money fields
 rich==15.0.0          # scorecard tables on stdout
 pytest==9.1.1         # the verifier tests are the pitch
 
-# Phase 2 - dashboard. Not needed for the CLI run or the tests.
+# The dashboard. Not needed for the CLI run or the tests.
 fastapi==0.141.1
 uvicorn==0.52.4
-
-# Optional LLM adjudication layer. The system runs fully without it (--no-llm).
-groq==1.7.0

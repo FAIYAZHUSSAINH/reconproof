@@ -1,0 +1,4 @@
+# The optional adjudication layer, and nothing else depends on it.
+# Without this install and without GROQ_API_KEY, `--no-llm` still produces the
+# complete scorecard - that is the point of the layer being optional.
+groq==1.7.0
