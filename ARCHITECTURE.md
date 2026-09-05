@@ -118,6 +118,15 @@ them.
 `RESULTS.tampered.md` so a demo cannot overwrite the committed numbers, which is a
 mistake this project has already made once.
 
+**Two palette tokens deviate from the design brief.** `--muted` and `--flag` are one
+step darker than the hexes in `docs/PHASE_2_POLISH.md`, which specifies the palette and,
+a few lines later, an accessibility floor with "no exceptions". The brief's own values
+score 4.14:1 and 4.21:1 against the paper and worse on the striped band, under the 4.5:1
+that normal text needs — and those two tokens carry every label, date, narration,
+residual and reason code on the screen. Hue and saturation are unchanged; only lightness
+moved, by the minimum that clears the floor. *Trade-off:* the brief is no longer followed
+to the letter, and that is a judgement call rather than a rule.
+
 **No build step for the dashboard.** Plain HTML, CSS and ES modules served by FastAPI.
 A judge should not need Node to see the demo, and a committed `dist/` nobody can rebuild
 is worse than no `dist/` at all. *Trade-off:* no JSX, no bundler, hand-written DOM. The
