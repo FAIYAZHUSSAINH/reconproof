@@ -14,10 +14,18 @@
   --paper:      #F3F6F1;
   --stripe:     #E4EBE0;
   --ink:        #16211C;
-  --muted:      #6B7A72;
+  /* Two tokens are one step darker than the brief's palette. The brief
+   * fixes these hexes AND sets an accessibility floor with "no exceptions",
+   * and on the paper stock the two disagree: #6B7A72 scores 4.14:1 and
+   * #A2691E scores 4.21:1 against --paper, both under the 4.5:1 that normal
+   * text needs, and worse again on the --stripe band. Labels, dates,
+   * narrations, residuals and reason codes are all normal-size text in these
+   * colours, so the floor wins. Same hue and saturation, lightness reduced
+   * until both clear 4.5:1 on paper and on the band. */
+  --muted:      #5F6C65;  /* was #6B7A72 — 5.04:1 on paper, 4.52:1 on stripe */
   --stamp-pass: #2F6B4F;
   --stamp-fail: #9B2C2C;
-  --flag:       #A2691E;
+  --flag:       #915E1B;  /* was #A2691E — 5.04:1 on paper, 4.52:1 on stripe */
 
   --sans: "IBM Plex Sans", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
   /* Monospace for figures only. Reconciliation columns have to align to be
@@ -233,14 +241,15 @@ table.ledger thead th {
 
 table.ledger thead th.col-num { text-align: right; }
 
-/* The greenbar: alternating bands, applied per credit and not per <tr>,
- * so a row and its derivation panel share one band. */
-tbody.band { background: transparent; }
-tbody.band.alt { background: var(--stripe); }
+/* The greenbar: alternating bands. A credit and its derivation panel carry
+ * the same band class, so the pair reads as one entry on the paper. The band
+ * cannot be a <tbody> per credit - that nests row groups and the inner ones
+ * stop obeying the table's fixed columns. */
+tr.band.alt > td { background: var(--stripe); }
 
 tr.ledger-row > * { padding: 7px 12px; border-bottom: 1px solid var(--stripe); }
 tr.ledger-row { cursor: pointer; }
-tr.ledger-row:hover > * { background: rgba(22, 33, 28, 0.045); }
+tr.ledger-row:hover > td { background: rgba(22, 33, 28, 0.055); }
 tr.ledger-row:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
 
 td.col-id, td.col-rule { font-family: var(--mono); font-size: 13px; white-space: nowrap; }
@@ -542,3 +551,33 @@ table.figures tr.is-weak td.key { color: var(--flag); }
 tr.ledger-row.is-neutralised td { color: var(--muted); }
 tr.ledger-row.is-neutralised td.col-id { text-decoration: line-through; }
 .verdict-word.neutral { color: var(--muted); font-weight: 400; }
+
+/* -- Tampered-batch banner ----------------------------------------------- */
+/* The run line already says how many records were corrupted, in small grey
+ * type nobody reads. That is not good enough: every number on the page is
+ * wrong while a tamper is in effect, and this project's entire claim is that
+ * it reports honest figures. So the state announces itself, and the way out
+ * is one click away. */
+
+.tamper-banner[hidden] { display: none; }
+
+.tamper-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 12px 32px;
+  border-bottom: 2px solid var(--stamp-fail);
+  color: var(--stamp-fail);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.tamper-banner strong { font-weight: 600; }
+.tamper-banner #tamper-banner-detail { font-family: var(--mono); font-size: 13px; }
+.tamper-banner .button {
+  border-color: var(--stamp-fail);
+  color: var(--stamp-fail);
+  white-space: nowrap;
+}
+.tamper-banner .button:hover { background: rgba(155, 44, 44, 0.08); }

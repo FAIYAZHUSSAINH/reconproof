@@ -129,6 +129,18 @@ function summaryItem(label, value, tone) {
   ]);
 }
 
+/* Loud, because a page quoting numbers from data it corrupted itself is the
+ * one failure this project cannot afford to ship. */
+function renderTamperBanner() {
+  const banner = document.getElementById("tamper-banner");
+  const changes = state.report.tampered;
+  banner.hidden = changes.length === 0;
+  if (!changes.length) return;
+  document.getElementById("tamper-banner-detail").textContent = changes
+    .map((c) => `${c.record_id}.${c.field} ${rupees(c.before)} → ${rupees(c.after)}`)
+    .join(", ");
+}
+
 function renderSummary() {
   const m = state.report.metrics;
   const llm = state.report.llm;
@@ -287,7 +299,12 @@ function renderLedger() {
   empty.hidden = true;
 
   rows.forEach((row, index) => {
-    const band = el("tbody", { class: index % 2 ? "band alt" : "band" });
+    // The greenbar band is a class on the rows, not a <tbody> per credit.
+    // Nesting a <tbody> inside the <tbody> produced an anonymous inner table
+    // whose columns ignored the colgroup, so the header obeyed the fixed
+    // layout and the body rows sized themselves by content and overflowed.
+    // See WHAT_BROKE.md, 5 Sep.
+    const band = index % 2 ? "band alt" : "band";
     const open = state.openRow === row.bank_txn_id;
     const passed = row.status === "matched";
 
@@ -305,7 +322,7 @@ function renderLedger() {
     ]);
 
     const tr = el("tr", {
-      class: `ledger-row${neutral ? " is-neutralised" : ""}`,
+      class: `ledger-row ${band}${neutral ? " is-neutralised" : ""}`,
       tabindex: "0",
       "aria-expanded": open ? "true" : "false",
       onclick: () => toggleRow(row.bank_txn_id),
@@ -327,11 +344,11 @@ function renderLedger() {
       cell("td", amountClass(row.residual), residualText(row.residual)),
       verdict,
     ]);
-    band.appendChild(tr);
+    body.appendChild(tr);
 
     if (open) {
       const proof = proofById(row.proof_id);
-      const panel = el("tr", { class: "derivation-row", "data-open-for": row.bank_txn_id }, [
+      const panel = el("tr", { class: `derivation-row ${band}`, "data-open-for": row.bank_txn_id }, [
         el("td", { colspan: "7" }, [
           neutral
             ? el("p", {
@@ -351,9 +368,8 @@ function renderLedger() {
                 }),
         ]),
       ]);
-      band.appendChild(panel);
+      body.appendChild(panel);
     }
-    body.appendChild(band);
   });
 }
 
@@ -715,6 +731,7 @@ function renderAll() {
   renderScorecard();
   renderTamperControls();
   renderTamper(null);
+  renderTamperBanner();
 }
 
 /* -- wiring -------------------------------------------------------------- */
@@ -739,6 +756,7 @@ document.getElementById("ledger-sort").addEventListener("change", (event) => {
 
 document.getElementById("tamper-form").addEventListener("submit", doTamper);
 document.getElementById("tamper-restore").addEventListener("click", doRestore);
+document.getElementById("tamper-banner-restore").addEventListener("click", doRestore);
 document.getElementById("record-close").addEventListener("click", () => {
   document.getElementById("record-sheet").hidden = true;
 });
