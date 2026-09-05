@@ -174,3 +174,67 @@ text. `TestIntegrityFailuresAreTypedHonestly` asserts all of it.
 and two of them describe failures of my own pipeline rather than of the merchant's
 books. That is the honest shape of it: some of what a reconciler cannot explain is the
 reconciler's fault, and the queue should say which.
+
+---
+
+## 2026-09-05 — The ledger's columns were a lie on a 1280px screen
+
+**Symptom.** Driving the dashboard through a real 1280px window before recording the
+demo: the ledger scrolled sideways by 210 px. The other three screens were fine. The
+header row was aligned; the body rows were not.
+
+**Diagnosis.** Measuring the cells gave it away. Header cells came out
+`[152, 118, 289, 148, 142, 148, 186]` — exactly the `<colgroup>`. Body cells came out
+`[99, 105, 629, 132, 133, 123, 218]` — content-sized, ignoring the colgroup entirely,
+and 1440 px wide inside a 1183 px table.
+
+The cause was one line in `renderLedger`. To get the greenbar band to cover a credit
+*and* its derivation panel, I had created one `<tbody>` per credit — and appended each
+one into `<tbody id="ledger-body">`. A `<tbody>` inside a `<tbody>` is not a row group;
+the engine wraps it in an anonymous table, and that inner table never sees the outer
+one's `table-layout: fixed` or its columns. The header, being a direct child of the real
+table, obeyed the colgroup. Everything else quietly re-invented its own widths.
+
+It looked *almost* right, which is why it survived four rounds of screenshots. The
+columns were misaligned in every image I had already committed to the README and I had
+read past it every time.
+
+**Fix.** One `<tbody>`, with the band as a class on the rows. A credit and its
+derivation row carry the same band class, so the pair still reads as one entry.
+
+**The number that got worse.** None, and that is the point: no test could have caught
+this. `pytest` was green throughout — the reconciliation was never wrong, only the
+picture of it was. The check that found it was measuring rendered geometry in a real
+browser at a real window size, which is not something I had been doing at all.
+
+---
+
+## 2026-09-05 — The brief's palette fails the brief's own accessibility floor
+
+**Symptom.** Computing WCAG contrast for every token against the paper stock, because
+`PHASE_2_POLISH.md` says "contrast checked against `--paper`" under a heading that reads
+"Accessibility floor, no exceptions".
+
+Two of the seven fail. `--muted` `#6B7A72` scores **4.14:1** and `--flag` `#A2691E`
+scores **4.21:1** against `--paper`, where normal-size text needs 4.5:1. On the
+`--stripe` band — every other row of the ledger — they drop to 3.71 and 3.77.
+
+**Diagnosis.** Not a subtle case. `--muted` carries the labels, value dates, narrations
+and source IDs; `--flag` carries every residual and reason code. All of it is
+normal-size text, most of it sitting on the striped band, and the residuals are the
+figures the whole screen exists to show.
+
+The brief also says of the palette: "use nothing outside this set". So the two
+instructions genuinely conflict, and the conflict has to be resolved rather than
+averaged.
+
+**Fix.** The floor wins, by the narrowest margin that clears it. Both tokens keep their
+hue and saturation exactly; only lightness drops, until each clears 4.5:1 on both the
+paper and the band: `--muted` `#5F6C65` (5.04 / 4.52), `--flag` `#915E1B` (5.04 / 4.52).
+The other five tokens are untouched, and the reasoning is written into `styles.css` at
+the point of deviation rather than buried here.
+
+**The number that got worse.** The design brief is no longer followed to the letter, and
+I cannot claim it is. Two hex values in a document that said "use nothing outside this
+set" are now different, on my own judgement, because I could not find a reading in which
+unreadable residuals were the intended outcome.
