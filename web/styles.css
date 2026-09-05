@@ -218,7 +218,12 @@ col.w-date     { width: 118px; }
 col.w-narration{ width: auto;  }
 col.w-amount   { width: 148px; }
 col.w-rule     { width: 142px; }
-col.w-verdict  { width: 186px; }
+/* Measured, not guessed: SUSPECT_UNLABELLED_REVERSAL is 195px in 12px Plex
+ * Mono and the cell has 12px of padding a side, so the column needs 219. At
+ * 186px the code painted 20px past the table's right rule - on a page whose
+ * whole argument is that it looks like ruled ledger paper. The narration
+ * column absorbs the difference; it is already truncated with an ellipsis. */
+col.w-verdict  { width: 224px; }
 
 td.col-narration {
   font-family: var(--mono);
@@ -269,6 +274,9 @@ td.col-date { color: var(--muted); font-size: 14px; white-space: nowrap; }
   font-family: var(--mono);
   font-size: 12px;
   color: var(--flag);
+  /* A net, not the plan: the column is sized for the longest code we have,
+   * and a longer one added later should wrap rather than escape the table. */
+  overflow-wrap: anywhere;
 }
 
 /* -- The derivation panel ------------------------------------------------ */

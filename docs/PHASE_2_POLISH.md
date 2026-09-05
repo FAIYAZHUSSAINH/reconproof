@@ -142,9 +142,11 @@ worse**. Roughly 150–250 words. Concrete, technical, unembellished, no moral a
 
 **Final checks:**
 
-- [ ] Clone the repo into a clean folder and run it. Actually do this.
-- [ ] Video link works while logged out
-- [ ] README numbers match `RESULTS.md`
-- [ ] No API keys in git history
-- [ ] Repo is public
-- [ ] Resume attached
+- [x] Clone the repo into a clean folder and run it. Actually do this.
+      — done from the public URL, not from a local copy: fresh venv, `pytest` green,
+      `run.ps1` reproduced the committed scorecard to the paisa
+- [ ] Video link works while logged out — **submitter's, not the build's**
+- [x] README numbers match `RESULTS.md` — every figure cross-checked line by line
+- [x] No API keys in git history — no `.env` tracked, no key-shaped strings, no home paths
+- [x] Repo is public
+- [ ] Resume attached — **submitter's, not the build's**

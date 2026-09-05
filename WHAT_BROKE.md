@@ -238,3 +238,61 @@ the point of deviation rather than buried here.
 I cannot claim it is. Two hex values in a document that said "use nothing outside this
 set" are now different, on my own judgement, because I could not find a reading in which
 unreadable residuals were the intended outcome.
+
+## 2026-09-05 — Two screens disagreed about the same ₹2,323.52
+
+**Symptom.** Found in a screenshot, not in a test. The Ledger showed `bnk_0017` with a
+residual of `—`; the Exceptions screen, two clicks away, showed the same credit at
+**(₹2,323.52)**. Both were rendering the same run.
+
+**Diagnosis.** `build_ledger` sourced the residual from the credit's proof:
+
+```python
+"residual": proof.residual if proof else None,
+```
+
+An `ORPHAN_CREDIT` has no proof, because no candidate was ever generated for it — no
+settlement plausibly explains a direct customer transfer. So `proof` was `None`, the
+residual was `None`, and `residualText` in `app.js` renders `null` as an em dash. But
+that dash is not "unknown": the whole point of the ledger is that `—` in a Residual
+column means **zero, this line balances**. Two orphan credits, ₹7,087.47 between them,
+were being displayed as balanced on the screen a reviewer opens first.
+
+The exception record had the right number the whole time. Nothing computed it wrongly;
+one of the two views simply never asked.
+
+**Fix.** Fall back to the exception's residual when there is no proof, and add
+`TestTheLedgerAgreesWithTheExceptionList` — three tests that walk every exception and
+assert the ledger row for the same subject carries the same paise, that no proofless
+credit reports zero, and that matched rows still do.
+
+**Why this one stings.** It is the second time in this build that two views of one
+number disagreed, and the second time the tests were green throughout, because every
+test read the pipeline result rather than what the screen actually says. A project whose
+argument is "every figure is recomputed from the records" cannot ship a screen that
+quietly rounds an unexplained ₹2,323.52 down to a dash. The tests now cross-check the
+two view models against each other, which is the check that was missing.
+
+## 2026-09-05 — The longest reason code escaped the table
+
+**Symptom.** Measuring rendered geometry in a real 1280px Chrome window rather than
+trusting the CSS: `SUSPECT_UNLABELLED_REVERSAL` painted **20px past the ledger's right
+rule**, into the page gutter.
+
+**Diagnosis.** `col.w-verdict` was 186px, set by eye. The code is 27 characters of 12px
+IBM Plex Mono — measured in the browser, 195px, plus 12px of cell padding a side, so the
+column needed 219. `table-layout: fixed` with no overflow rule on `.reason-code` meant
+the text simply drew outside its cell. No horizontal scrollbar appeared, so nothing
+flagged it; it just broke the one ruled edge on a page whose entire argument is that it
+looks like ledger paper.
+
+**Fix.** Widen to 224px — the measured requirement, not another guess — and add
+`overflow-wrap: anywhere` on `.reason-code` as a net, so a longer code added later wraps
+instead of escaping. The narration column absorbs the loss; it is already truncated with
+an ellipsis. Re-measured afterwards: nothing escapes any table on any of the four views,
+and no view scrolls horizontally.
+
+Same run turned up a `404 /favicon.ico` in the console, now a small inline SVG.
+
+**The lesson, twice over.** Both of today's UI bugs were invisible to `pytest` and
+visible in one screenshot. The unit of truth for a dashboard is the rendered pixel.

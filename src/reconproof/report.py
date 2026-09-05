@@ -925,7 +925,18 @@ def build_ledger(result: PipelineResult, truth: GroundTruth) -> list[dict]:
                 "rule": proof.rule if proof else None,
                 "proof_id": proof.proof_id if proof else None,
                 "settlement_ids": proof.members.get("settlement_ids", []) if proof else [],
-                "residual": proof.residual if proof else None,
+                # An orphan credit has no proof, because no candidate was
+                # ever generated for it - but it does have a residual, and
+                # the exception screen shows it. Falling back to None made
+                # the ledger render the zero glyph for a credit that is
+                # thousands of rupees out, so two screens disagreed about
+                # the same number. The exception's residual is the honest
+                # value.
+                "residual": (
+                    proof.residual
+                    if proof
+                    else (exception.residual if exception else None)
+                ),
                 "confidence": proof.confidence if proof else None,
                 "verdict": proof.verdict if proof else None,
                 "verdict_reason": proof.verdict_reason if proof else None,

@@ -239,16 +239,20 @@ verifier, so a PASS flips to FAIL live.
 
 ## Phase 1 acceptance checklist — all must be true before Phase 2
 
-- [ ] `python -m reconproof.run --no-llm --seed 42` runs clean on a fresh venv
-- [ ] All 13 case types appear in the generated data
-- [ ] `report.json` and `RESULTS.md` written
-- [ ] **False-match rate is 0**
-- [ ] Every exception has a typed reason and a residual
-- [ ] Per-case-type breakdown present
-- [ ] `pytest` green, including the tamper test
-- [ ] `--tamper` visibly flips a proof to FAIL
-- [ ] README runs in under 60 seconds, no API key
-- [ ] `WHAT_BROKE.md` has at least two real entries
-- [ ] Committed in small increments with clear messages
+Signed off 2026-09-05, each line re-verified against the repo as it stands rather
+than from memory of having done it.
+
+- [x] `python -m reconproof.run --no-llm --seed 42` runs clean on a fresh venv
+      — checked from a clean clone of the public repo, new venv, `requirements.txt` only
+- [x] All 13 case types appear in the generated data — 13 rows in the per-case-type table
+- [x] `report.json` and `RESULTS.md` written
+- [x] **False-match rate is 0** — and at `easy`, `standard` and `hard`
+- [x] Every exception has a typed reason and a residual — exception coverage 100.0%
+- [x] Per-case-type breakdown present — weakest rows sorted to the top and flagged
+- [x] `pytest` green, including the tamper test — 138 passed
+- [x] `--tamper` visibly flips a proof to FAIL — CLI and dashboard, same `apply_tamper`
+- [x] README runs in under 60 seconds, no API key — `--no-llm` is the default path
+- [x] `WHAT_BROKE.md` has at least two real entries — nine
+- [x] Committed in small increments with clear messages
 
 If the match rate is lower than you hoped — **ship the honest number.**

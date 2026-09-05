@@ -318,3 +318,52 @@ class TestTheMatchRateFallsWhereItShould:
         """The one number that is not allowed to move."""
         for level in ("easy", "standard", "hard"):
             assert self._score(tmp_path, level)["false_matches"] == 0, level
+
+
+class TestTheLedgerAgreesWithTheExceptionList:
+    """Two screens, one number.
+
+    A credit with no candidate has no proof, so the ledger row used to carry
+    `residual: None` - which the dashboard renders as the em dash it reserves
+    for a residual of exactly zero. The exceptions screen, reading the
+    exception record instead, showed the same credit thousands of rupees out.
+    Whichever screen a reviewer opened first decided what they believed, and
+    one of the two was wrong.
+    """
+
+    def _ledger(self, store, truth):
+        from reconproof.report import build_ledger
+
+        result = run_pipeline(store)
+        return result, {row["bank_txn_id"]: row for row in build_ledger(result, truth)}
+
+    def test_every_exception_row_carries_its_residual(self, store, truth):
+        result, ledger = self._ledger(store, truth)
+        for exception in result.exceptions:
+            row = ledger.get(exception.subject_id)
+            if row is None:  # a settlement or order, not a bank credit
+                continue
+            assert row["residual"] == exception.residual, (
+                f"{exception.subject_id}: ledger says {row['residual']}, "
+                f"exceptions say {exception.residual}"
+            )
+
+    def test_a_proofless_credit_is_not_shown_as_balanced(self, store, truth):
+        """`None` reads as zero on screen, so it must not stand in for unknown."""
+        _, ledger = self._ledger(store, truth)
+        orphans = [
+            row
+            for row in ledger.values()
+            if row["reason_code"] == "ORPHAN_CREDIT"
+        ]
+        assert orphans, "the standard batch is supposed to contain orphan credits"
+        for row in orphans:
+            assert row["proof_id"] is None
+            assert row["residual"] not in (None, 0), row["bank_txn_id"]
+
+    def test_matched_rows_still_report_zero(self, store, truth):
+        _, ledger = self._ledger(store, truth)
+        matched = [row for row in ledger.values() if row["status"] == "matched"]
+        assert matched
+        for row in matched:
+            assert row["residual"] == 0, row["bank_txn_id"]

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="ReconProof">
+  <!-- Greenbar stock: paper with one band, and a stamp over it. Same four
+       tokens as styles.css, hard-coded because an SVG served as an icon has
+       no stylesheet to inherit from. -->
+  <rect width="32" height="32" fill="#F3F6F1"/>
+  <rect y="7" width="32" height="6" fill="#E4EBE0"/>
+  <rect y="19" width="32" height="6" fill="#E4EBE0"/>
+  <g transform="rotate(-4 16 16)">
+    <rect x="3.5" y="8.5" width="25" height="15" rx="1.5"
+          fill="none" stroke="#2F6B4F" stroke-width="2.5"/>
+    <path d="M9.5 16.2l4.2 4.2 8.8-8.8" fill="none" stroke="#2F6B4F"
+          stroke-width="3.2" stroke-linecap="square"/>
+  </g>
+</svg>
